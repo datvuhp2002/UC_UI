@@ -35,10 +35,10 @@
     }
     &:hover {
       color: #fff;
+      background-color: rgba(var(--primary-dark-color), 0.8);
       .title {
         font-weight: bolder;
       }
-      background-color: rgba(var(--primary-dark-color), 0.7);
     }
   }
   &.active {
