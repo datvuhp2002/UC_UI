@@ -1,0 +1,49 @@
+.carousel-caption-custom {
+    position: absolute;
+    /* top: 0; */
+    bottom: 54px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+}
+.bh-keyword {
+    height: 40px;
+    border: 2px solid #eee;
+    font-size: 15px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    -webkit-border-top-left-radius: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+    padding-left: 10px;
+}
+.bh-option {
+    border: 2px solid #eee;
+    background-color: #eee;
+    height: 40px;
+    font-size: 15px;
+    border-radius: 0;
+    padding-left: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    color: #333;
+}
+.bh-search {
+    margin-top: 5px;
+    height: 30px;
+    width: 30px;
+    border: none;
+    border-radius: 5px;
+    margin-left: -36px;
+
+}
+.wapper-seach-content {
+    position: absolute;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,30 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  &.logo {
+    height: calc(var(--header-height) - 5rem);
+    width: calc(var(--header-height) + 4rem);
+  }
+}
+.w100 {
+  width: 100%;
+}
+.w50 {
+  width: 50%;
+}
+.w30 {
+  width: 30%;
+}
+.minw30 {
+  min-width: 30%;
+}
+.h100 {
+  height: 100%;
+}
+.h50 {
+  height: 50%;
+}
+.minh30 {
+  min-height: 30%;
+}

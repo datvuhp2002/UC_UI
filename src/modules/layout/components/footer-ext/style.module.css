@@ -1,0 +1,9 @@
+.fe-scroll-top {
+    position: fixed;
+    bottom: 15px;
+    right: 30px;
+    opacity: 1;
+    cursor: pointer;
+    font-size: 2rem;
+    z-index: 99999;
+}

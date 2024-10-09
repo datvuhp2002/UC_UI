@@ -1,0 +1,20 @@
+.ht-social {
+ 
+}
+.ht-social a {
+    margin-right: 5px;
+    margin-left: 5px;
+    border-right: 1px solid;
+}
+.ht-social a:last-child {
+    border-right: none;
+}
+.ht-social img {
+    width: 1;
+}
+.ht-social img {
+    margin-right: 5px;
+}
+.ht-social span {
+    margin-right: 5px;
+}

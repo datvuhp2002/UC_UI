@@ -1,0 +1,11 @@
+.ft-hd-collection {
+    font-weight: 500;
+}
+.ft-text-collection {
+    cursor: pointer;
+    font-size: 14px;
+}
+.info-footer {
+    display: block;
+    font-size: 13px;
+}

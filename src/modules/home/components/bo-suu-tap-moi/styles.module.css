@@ -1,0 +1,27 @@
+.img-doc-new-home {
+    display: block;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100%;
+    object-fit: cover;
+}
+
+.doc-title {
+    margin-top: 5px;
+    height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 19px;
+    -webkit-line-clamp: 1;
+    max-height: 36px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    visibility: visible;
+}
+.border-title {
+    width: 35px;
+    height: 2px;
+    background-color: lightgray;
+    margin-top: -2px;
+}

@@ -1,0 +1,38 @@
+.wrapper {
+  height: var(--header-height);
+  // position: static;
+  background-color: var(--header-background);
+  .title {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    font-weight: bold;
+  }
+  &.toggleMenu {
+    color: var(--navlink-text-color);
+    background-color: #fff;
+  }
+  .barButton {
+    border-radius: 1rem;
+    background-color: #fff;
+    border: 0.15rem solid var(--primary-color);
+    font-size: 1.8rem;
+    padding: 0.5rem 1.5rem;
+    .icon {
+      color: var(--primary-color);
+    }
+    &:hover {
+      background-color: var(--primary-color);
+      .icon {
+        color: #fff;
+      }
+    }
+  }
+}
+.menu_tooltip {
+  opacity: 1 !important;
+  background-color: #fff !important;
+  .tooltip_wrapper {
+    // padding: 1rem;
+    opacity: 1;
+  }
+}
