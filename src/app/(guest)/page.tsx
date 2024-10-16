@@ -24,7 +24,7 @@ const page = () => {
         </div>
         <div className="col-xs-12 col-md-6">
           <div className="text-center">
-            <div style={{ fontSize: "3.5rem" }}>Thực hiện đăng ký làm</div>
+            <div style={{ fontSize: "3.5rem" }}>Đăng ký làm</div>
             <div
               className={`${styles.primary_color}`}
               style={{ fontSize: "3.5rem", fontWeight: 700 }}

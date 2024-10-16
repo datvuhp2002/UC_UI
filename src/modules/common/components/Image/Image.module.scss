@@ -2,10 +2,16 @@
   width: 100%;
   height: 100%;
   object-fit: fill;
-  &.logo {
-    height: calc(var(--header-height) - 5rem);
-    width: calc(var(--header-height) + 4rem);
-  }
+}
+.admin_logo {
+}
+.logo {
+  // height: calc(var(--header-height) - 5rem);
+  max-height: var(--header-height);
+  width: calc(var(--header-height) + 4rem);
+}
+.admin_logo {
+  max-height: calc(var(--header-height) - 2rem);
 }
 .w100 {
   width: 100%;

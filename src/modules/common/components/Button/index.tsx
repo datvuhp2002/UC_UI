@@ -20,9 +20,16 @@ interface ButtonProps {
   directionLink?: boolean;
   research_information?: boolean;
   active_research?: boolean;
+  admin_temp?: boolean;
   className?: string;
   leftIcon?: ReactNode;
   isInformation?: boolean;
+  transparent_btn?: boolean;
+  edit_btn?: boolean;
+  trash_btn?: boolean;
+  icon_only?: boolean;
+  orange_btn?: boolean;
+  grey_btn?: boolean;
   rightIcon?: ReactNode;
   children?: ReactNode;
   onClick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>; // Click handler for both Link and button
@@ -39,14 +46,21 @@ const Button: React.FC<ButtonProps> = ({
   barButton,
   disabled = false,
   active = false,
+  admin_temp = false,
+  transparent_btn,
   collapse,
   directionLink,
+  orange_btn,
   className,
+  grey_btn,
   research_information,
   active_research,
   leftIcon,
   rightIcon,
   children,
+  icon_only,
+  edit_btn,
+  trash_btn,
   onClick,
   ...passProps
 }) => {
@@ -76,7 +90,14 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   const classes = cx("wrapper", {
+    edit_btn,
+    trash_btn,
+    icon_only,
+    admin_temp,
+    grey_btn,
+    transparent_btn,
     active,
+    orange_btn,
     NavLink,
     toggleMenu,
     rounded,

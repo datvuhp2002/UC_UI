@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./GopY.module.scss";
-import Button from "@/modules/common/components/Button";
-import FormCommentLibraryCard from "@/modules/common/share-pages/form-comment-library-card";
+import FormCommentLibraryCard from "@/modules/layout/register-library-card-online/components/form-comment-library-card";
 const page = () => {
   return (
     <div className={`${styles.wrapper} shadow-sm align-items-center pb-5 `}>

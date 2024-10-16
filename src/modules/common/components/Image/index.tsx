@@ -11,6 +11,7 @@ interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   src: string; // Required src prop
   alt: string; // Required alt prop
   logo?: boolean; // Optional logo prop
+  admin_logo?: boolean; // Optional logo prop
   className?: string; // Optional className prop
   fallback?: string; // Optional fallback image URL
   w100?: boolean; // Optional width 100% prop
@@ -25,6 +26,7 @@ interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
 const Image: React.FC<ImageProps> = ({
   src,
   alt,
+  admin_logo,
   logo,
   className,
   fallback: customFallback = process.env.FILE_URL + "images/logo.png",
@@ -49,6 +51,7 @@ const Image: React.FC<ImageProps> = ({
 
   // Generate class names for the component
   const classes = cx("wrapper", {
+    admin_logo,
     logo,
     w100,
     w30,

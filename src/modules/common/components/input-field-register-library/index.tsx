@@ -3,7 +3,7 @@ import styles from "./InputField.module.scss"; // Nhớ import CSS modules nếu
 import Input from "../Input";
 
 interface InputFieldProps {
-  label: string;
+  label?: string;
   name: string;
   register: any;
   required?: boolean;
@@ -12,6 +12,8 @@ interface InputFieldProps {
   leftIcon?: React.ReactNode;
   errors: any;
   type?: string;
+  text_end?: boolean;
+  admin_temp?: boolean;
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -25,16 +27,25 @@ const InputField: React.FC<InputFieldProps> = ({
   leftIcon,
   errors,
   type = "text",
+  text_end = false,
+  admin_temp = false,
   onInput,
 }) => {
   return (
-    <div className={`${styles.form_item} row align-items-center`}>
-      <label className="col-sm-4 col-xs-12 mb-2 mb-md-0">
-        {label}
-        {required && <span className="ms-1 text-danger">(*)</span>}
-      </label>
-      <div className="col-sm-8 col-xs-12">
+    <div
+      className={`${styles.form_item} row align-items-center ${label ? "" : "mt-0"}`}
+    >
+      {label && (
+        <label
+          className={`col-sm-4 col-xs-12 mb-2 mb-md-0 ${text_end ? "text-end" : "text-start"}`}
+        >
+          {label}
+          {required && <span className={`ms-1 text-danger`}>(*)</span>}
+        </label>
+      )}
+      <div className={label ? `col-sm-8 col-xs-12` : "col align-items-center"}>
         <Input
+          admin_temp={admin_temp}
           type={type}
           name={name}
           register={register}

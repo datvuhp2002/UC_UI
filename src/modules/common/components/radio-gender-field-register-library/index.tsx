@@ -21,8 +21,11 @@ const RadioField: React.FC<RadioFieldProps> = ({ label, register, errors }) => (
             className="form-check-input me-2"
             {...register("gender", { required: "Giới tính là bắt buộc" })}
             value="male"
+            id="male"
           />
-          Nam
+          <label className=" fw-normal" htmlFor="male">
+            Nam
+          </label>
         </span>
         <span className="form-check-label ms-4">
           <input
@@ -30,8 +33,11 @@ const RadioField: React.FC<RadioFieldProps> = ({ label, register, errors }) => (
             className="form-check-input me-2"
             {...register("gender", { required: "Giới tính là bắt buộc" })}
             value="female"
+            id="female"
           />
-          Nữ
+          <label className=" fw-normal" htmlFor="female">
+            Nữ
+          </label>
         </span>
       </div>
       {errors.gender && (

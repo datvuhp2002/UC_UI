@@ -4,7 +4,7 @@ const Service = "Car_register";
 const RegisterLibraryServices = {
   Register: async (data: any) => {
     let res: any = await fetch({
-      url: `/${Service}/insert-item`,
+      url: `/${Service}/insert-register`,
       method: "post",
       data,
     });

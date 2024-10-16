@@ -45,6 +45,7 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
   const cropperRef = useRef<any>(null); // Cropper reference
   const [scaleX, setScaleX] = useState<number>(1); // Flip X axis state
   const [scaleY, setScaleY] = useState<number>(1); // Flip Y axis state
+  const [isSelecteImag, SetIsSelecteImag] = useState<boolean>(false);
   // Handle flipping the image horizontally
   const handleFlipX = () => {
     const newScaleX = scaleX === 1 ? -1 : 1;
@@ -69,9 +70,7 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
   // Handle image selection from file input
   const onSelectImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
     if (file) {
-      // Kiểm tra định dạng file (chỉ cho phép hình ảnh)
       const validImageTypes = [
         "image/jpeg",
         "image/png",
@@ -95,14 +94,12 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
           message: "File không được lớn hơn 200KB.",
         });
         setIsModalOpen(false);
-
         return;
       } else {
         clearErrors("photo");
       }
-
-      // Nếu file hợp lệ, tiếp tục xử lý file
       setFileName(file.name);
+      SetIsSelecteImag(true);
       const reader = new FileReader();
       reader.onload = () => {
         setImage(reader.result as string);
@@ -139,7 +136,7 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
       <Popover.Header as="h3">Hình ảnh đã tải lên</Popover.Header>
       <Popover.Body>
         {croppedImage ? (
-          <img src={croppedImage} alt="Cropped" style={{ width: "100%" }} />
+          <Image src={croppedImage} alt="Cropped" style={{ width: "100%" }} />
         ) : (
           "Chưa có hình ảnh nào được tải lên."
         )}
@@ -221,7 +218,7 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
         </Modal.Header>
         <Modal.Body>
           <Cropper
-            src={image} // Display selected image or default image
+            src={image}
             style={{ height: 400, width: "100%" }}
             aspectRatio={3 / 4} // Aspect ratio 3:4
             guides={false}
@@ -232,7 +229,11 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
           <div className={`${styles.action} d-flex align-items-center`}>
             {/* Button to upload a new image */}
             <div className={`${styles.btn_group}`}>
-              <Button as="label" htmlFor="fileInput">
+              <Button
+                as="label"
+                htmlFor="fileInput"
+                onClick={() => console.log("abc")}
+              >
                 Tải ảnh
                 <input
                   type="file"
@@ -316,7 +317,9 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
             </div>
           </div>
           <div className={`${styles.btn_group}`}>
-            <Button onClick={handleCrop}>Hoàn thành</Button>
+            <Button onClick={handleCrop} disabled={!isSelecteImag}>
+              Hoàn thành
+            </Button>
           </div>
         </Modal.Footer>
       </Modal>

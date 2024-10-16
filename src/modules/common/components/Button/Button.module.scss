@@ -16,8 +16,42 @@
   .icon_left {
     margin-right: 0.5rem;
   }
+  &.icon_only {
+    .icon_right,
+    .icon_left {
+      width: 2rem;
+      height: 2rem;
+      margin: 0;
+    }
+  }
+
   .icon_right {
     margin-left: 0.5rem;
+  }
+
+  &.orange_btn {
+    background: var(--admin-orange-color);
+    &:hover {
+      opacity: 1;
+      background-color: #fb7500;
+      border-color: #fb7500;
+    }
+  }
+  &.grey_btn {
+    background: grey;
+    &:hover {
+      opacity: 1;
+      background-color: #565e64;
+    }
+  }
+  &.transparent_btn {
+    color: grey;
+    background: transparent;
+    &:hover {
+      opacity: 1;
+      background-color: rgba(145 158 171 / 0.08);
+      text-decoration: none;
+    }
   }
   &.disabled {
     pointer-events: none;
@@ -39,6 +73,16 @@
       .title {
         font-weight: bolder;
       }
+    }
+  }
+  &.admin_temp {
+    background: var(--admin-orange-color);
+    .Icon {
+      color: #fff;
+    }
+    &:hover {
+      background: var(--admin-deep-orange-color);
+      opacity: 1;
     }
   }
   &.active {
@@ -110,6 +154,25 @@
       background-color: var(--navlink-background-color);
     }
   }
+  &.edit_btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #333;
+    .title {
+      margin-left: 2rem;
+    }
+  }
+  &.trash_btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--danger-color);
+    .title {
+      margin-left: 2rem;
+    }
+  }
+
   @include mobile {
     & + .wrapper {
       margin-top: 1rem;
@@ -126,6 +189,6 @@
     }
   }
   &:hover {
-    opacity: 0.6;
+    opacity: 0.8;
   }
 }

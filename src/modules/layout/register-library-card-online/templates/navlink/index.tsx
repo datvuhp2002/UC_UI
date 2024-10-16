@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 interface Route {
   path: string;
-  name?: string; // Make 'name' optional
+  name?: string;
   icon?: React.ReactNode;
 }
 
@@ -29,7 +29,6 @@ const NavLink: React.FC = () => {
           return (
             <Button to={route.path} active={isActive} key={route.path} NavLink>
               {route.name || ""}
-              {/* Handle the case where 'name' is undefined */}
             </Button>
           );
         })}

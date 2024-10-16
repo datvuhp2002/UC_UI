@@ -11,25 +11,25 @@ const Index = (props: Props) => {
     if (configToast.type == "success") {
       html.push(
         <Toast.Header className="bg-success">
-          <span className="me-auto">Thành công</span>
+          <span className="me-auto fs-4 fw-bold text-light">Thành công</span>
         </Toast.Header>
       );
     } else if (configToast.type == "info") {
       html.push(
         <Toast.Header>
-          <span className="me-auto">Thông tin</span>
+          <span className="me-auto fs-4 fw-bold text-light">Thông tin</span>
         </Toast.Header>
       );
     } else if (configToast.type == "warning") {
       html.push(
         <Toast.Header className="bg-warning">
-          <span className="me-auto">Cảnh báo</span>
+          <span className="me-auto fs-4 fw-bold text-light">Cảnh báo</span>
         </Toast.Header>
       );
     } else if (configToast.type == "error") {
       html.push(
         <Toast.Header className="bg-danger">
-          <span className="me-auto">Lỗi</span>
+          <span className="me-auto fs-4 fw-bold text-light">Lỗi</span>
         </Toast.Header>
       );
     }
@@ -38,8 +38,8 @@ const Index = (props: Props) => {
   return (
     <ToastContainer
       position="top-end"
-      className="p-3"
-      style={{ position: "fixed", zIndex: 99999999999999999999 }}
+      className="p-3 fs-1"
+      style={{ position: "fixed", zIndex: 9999999999999999999, color: "#333" }}
     >
       <Toast
         onClose={() => setShowToast(false)}
@@ -48,7 +48,7 @@ const Index = (props: Props) => {
         autohide={true}
       >
         {TypeToastHeader()}
-        <Toast.Body>{configToast.content}</Toast.Body>
+        <Toast.Body className="fs-4">{configToast.content}</Toast.Body>
       </Toast>
     </ToastContainer>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 import useToast from "../hooks/useToast";
 import Toast from "@/modules/common/components/toast";
 const ToastContext = createContext({});

@@ -17,6 +17,7 @@ interface InputProps {
   onBlurWrapp?: (e: React.FocusEvent<HTMLInputElement>) => void;
   success?: boolean;
   cropper?: boolean;
+  admin_temp?: boolean;
   errors?: any; // Thêm props để nhận lỗi từ InputField
   [key: string]: any; // Cho phép các props bổ sung
 }
@@ -32,6 +33,7 @@ const Input: React.FC<InputProps> = ({
   onChange,
   onBlur,
   cropper,
+  admin_temp,
   errors, // Nhận props errors
   ...passProps
 }) => {
@@ -48,7 +50,7 @@ const Input: React.FC<InputProps> = ({
   // const hasSuccess = errors && !hasError;
   const classes = cx("wrapper", {
     error: hasError,
-    // success: hasSuccess,
+    admin_temp,
     cropper,
     [className as string]: className,
   });

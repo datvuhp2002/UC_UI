@@ -6,6 +6,7 @@ interface SelectProps {
   text?: boolean;
   w50?: boolean;
   w70?: boolean;
+  admin_temp?: boolean;
   className?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -23,6 +24,7 @@ const Select: React.FC<SelectProps> = ({
   text = false,
   w50,
   w70,
+  admin_temp,
   className,
   leftIcon,
   rightIcon,
@@ -40,6 +42,7 @@ const Select: React.FC<SelectProps> = ({
   const classes = cx("wrapper", {
     w50,
     w70,
+    admin_temp,
     error: hasError,
     [className!]: className, // Use className with non-null assertion
   });
