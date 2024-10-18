@@ -171,7 +171,7 @@ const Sidebar: React.FC<{
                     const isSubmenuActive = item.path
                       ? pathName === subItem.path ||
                         pathName.startsWith(
-                          `/admin/${item.path}/${subItem.path}/`
+                          `/admin/${item.path}/${subItem.path}`
                         )
                       : false;
                     return (
@@ -216,9 +216,9 @@ const Sidebar: React.FC<{
       </div>
 
       <Drawer
-        variant="permanent"
         open={open}
         className={`${styles.wrapper} d-none d-sm-block`}
+        variant="permanent"
       >
         <DrawerHeader
           className={`${styles.logo} d-flex align-items-center justify-content-center `}

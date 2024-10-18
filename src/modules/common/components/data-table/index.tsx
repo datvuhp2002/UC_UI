@@ -1,29 +1,46 @@
 "use client";
-import { useState, MouseEvent } from "react";
-import DataTable from "datatables.net-react";
-import DT from "datatables.net-dt";
-import "datatables.net-fixedcolumns-dt";
-import "datatables.net-responsive-dt";
+import { useState, MouseEvent, useEffect } from "react";
+
 import { Popover, Stack } from "@mui/material";
 import Button from "../Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
+import DT from "datatables.net-dt";
+import "datatables.net-fixedcolumns-dt";
+import "datatables.net-responsive-dt";
+import DataTable from "datatables.net-react";
 
 DataTable.use(DT);
-
-interface TableData {
-  id: string;
-  name: string;
-  position: string;
-}
-
-function App() {
-  const [tableData] = useState<TableData[]>([
-    { id: "1", name: "Tiger Nixon", position: "System Architect" },
-    { id: "2", name: "Garrett Winters", position: "Accountant" },
-    { id: "3", name: "Ashton Cox", position: "Junior Technical Author" },
-  ]);
-
+// interface TableData {
+//   registrationcode: string;
+//   cardType: string;
+//   readerType: string;
+//   registerType: string | null;
+//   fullName: string;
+//   dob: string;
+//   cccd: string;
+//   address: string;
+//   email: string;
+//   tel: string;
+//   job: string;
+//   avatar: string;
+//   status: string;
+//   cardNo: string | null;
+//   representative: string | null;
+//   createdBy: string | null;
+//   createdDate: string;
+//   deadline: string | null;
+//   note: string | null;
+//   office: string;
+//   gender: "male" | "female" | "other";
+//   expiredDate: string | null;
+//   isPayment: boolean;
+//   receiveType: string;
+//   id: string;
+// }
+function App({ data, selectedColumn, edit_direction }: any) {
+  const route = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedRow, setSelectedRow] = useState<string | null>(null);
 
@@ -37,8 +54,9 @@ function App() {
     setSelectedRow(null);
   };
 
-  const handleEdit = () => {
+  const handleView = () => {
     console.log(`Edit item with ID: ${selectedRow}`);
+    route.push(`${edit_direction}/${selectedRow}`);
     // handleClosePopover();
   };
 
@@ -49,7 +67,7 @@ function App() {
 
   const tableOptions = {
     scrollX: true,
-    responsive: true,
+    responsive: false,
     fixedColumns: {
       leftColumns: 0,
       rightColumns: 1,
@@ -58,17 +76,24 @@ function App() {
       lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
       search: "Tìm kiếm",
       info: "Hiển thị _START_ đến _END_ của _TOTAL_ mục",
+      emptyTable: "Không có dữ liệu",
+      zeroRecords: "Không có dữ liệu",
     },
     columns: [
-      { title: "Name", data: "name" },
-      { title: "Position", data: "position" },
-      { title: "Position", data: "position" },
-      { title: "Position", data: "position" },
       {
-        title: "Actions",
+        title: "#",
+        data: null,
+        orderable: true,
+        render: (data: any, type: any, row: any, meta: any) => {
+          return meta.row + 1;
+        },
+      },
+      ...selectedColumn,
+      {
+        title: "",
         data: null,
         orderable: false,
-        render: (data: any, type: any, row: TableData) => {
+        render: (data: any, type: any, row: any) => {
           return `
             <button class='action-menu bg-transparent btn ' data-id='${row.id}'>
                 <svg fill="#333" width="3rem" height="2rem" viewBox="0 0 512.00 512.00" xmlns="http://www.w3.org/2000/svg" stroke="#637381" stroke-width="0.512" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title>ionicons-v5-f</title><circle cx="256" cy="256" r="48"></circle><circle cx="256" cy="416" r="48"></circle><circle cx="256" cy="96" r="48"></circle></g></svg>
@@ -90,14 +115,16 @@ function App() {
       });
     },
   };
-
+  useEffect(() => {}, [data]);
   return (
     <div style={{ width: "100%", overflowX: "auto" }}>
-      <DataTable
-        data={tableData}
-        options={tableOptions}
-        className="display nowrap"
-      />
+      {typeof window !== "undefined" && (
+        <DataTable
+          data={data}
+          options={tableOptions}
+          className="display nowrap"
+        />
+      )}
       <Popover
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
@@ -114,22 +141,23 @@ function App() {
         <Stack spacing={1} padding={0.4} className="bg-white">
           <div>
             <Button
-              rounded
-              className="w-100 px-3"
+              className="w-100 justify-content start "
               transparent_btn
+              rounded
               edit_btn
-              onClick={handleEdit}
-              leftIcon={<FontAwesomeIcon icon={faPen} />}
+              onClick={handleView}
+              leftIcon={<FontAwesomeIcon icon={faEye} />}
             >
-              Sửa
+              Chi tiết
             </Button>
           </div>
+
           <div>
             <Button
+              className="w-100 "
+              color="error"
               rounded
               transparent_btn
-              className="w-100 px-3"
-              color="error"
               trash_btn
               onClick={handleDelete}
               leftIcon={<FontAwesomeIcon icon={faTrashCan} />}

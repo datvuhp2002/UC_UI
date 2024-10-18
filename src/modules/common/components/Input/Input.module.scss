@@ -56,6 +56,9 @@
       border: 0.1rem solid #aaa;
     }
   }
+  &.login_temp {
+    height: 5rem;
+  }
   &.success {
     border: 0.3px solid green; // Ghi đè thuộc tính border của wrapper
     color: green; // Ghi đè thuộc tính color của wrapper

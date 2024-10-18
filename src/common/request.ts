@@ -26,7 +26,7 @@ service.interceptors.response.use(
     if (res.StatusCode === 200 && res.Success) {
       return res;
     } else {
-      if (res.StatusCode === 401) {
+      if (res?.StatusCode === 401) {
         window.location.href = "/page401";
       } else {
         if (response.status) {
@@ -37,11 +37,13 @@ service.interceptors.response.use(
     }
   },
   (error: any) => {
-    if (error.response.status === 401) {
-      window.location.href = "/page401";
-    } else {
-      console.log(error);
-    }
+    console.log(error);
+
+    // if (error.response.status === 401) {
+    //   window.location.href = "/page401";
+    // } else {
+    //   console.log(error);
+    // }
   }
 );
 

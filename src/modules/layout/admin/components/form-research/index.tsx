@@ -10,8 +10,8 @@ import InputField from "@/modules/common/components/input-field-register-library
 import Button from "@/modules/common/components/Button";
 
 interface FormAdminResearchProps {
-  register: any; // Adjust with correct type based on react-hook-form
-  errors: any; // Adjust type for error handling
+  register: any;
+  errors: any;
   handleSubmit: (
     onSubmit: () => void
   ) => (e?: React.BaseSyntheticEvent) => void;

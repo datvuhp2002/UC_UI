@@ -37,7 +37,7 @@ const Index = (props: Props) => {
   };
   return (
     <ToastContainer
-      position="top-end"
+      position="bottom-end"
       className="p-3 fs-1"
       style={{ position: "fixed", zIndex: 9999999999999999999, color: "#333" }}
     >

@@ -22,7 +22,7 @@ export const validateDate = (value: string) => {
   // Kiểm tra định dạng dd/mm/yyyy
   const regex = /^\d{2}\/\d{2}\/\d{4}$/;
   if (!regex.test(value)) {
-    return "Ngày sinh phải có định dạng Ngày/tháng/năm";
+    return "Ngày phải có định dạng Ngày/tháng/năm";
   }
 
   // Tách ngày, tháng, năm

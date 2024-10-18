@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Card.module.scss";
 import { Divider } from "@mui/material";
-const Card: React.FC<{ children: React.ReactNode; title: string }> = ({
+const Card: React.FC<{ children: React.ReactNode; title: any }> = ({
   children,
   title,
 }) => {

@@ -10,6 +10,9 @@
   max-height: var(--header-height);
   width: calc(var(--header-height) + 4rem);
 }
+.login_logo {
+  width: calc(var(--header-height));
+}
 .admin_logo {
   max-height: calc(var(--header-height) - 2rem);
 }

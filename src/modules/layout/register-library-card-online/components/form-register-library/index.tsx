@@ -262,7 +262,7 @@ const FormRegisterLibrary = ({ setRegisterData }: any) => {
                     {...register("receiveType", {
                       required: "Nơi nhận thẻ là bắt buộc",
                     })}
-                    value="home"
+                    value="Tại nhà"
                     id="home"
                   />
                   <label className="w-100 fw-normal" htmlFor="home">
@@ -278,7 +278,7 @@ const FormRegisterLibrary = ({ setRegisterData }: any) => {
                     {...register("receiveType", {
                       required: "Nơi nhận thẻ là bắt buộc",
                     })}
-                    value="library"
+                    value="Tại thư viện"
                     id="library"
                   />
                   <label className="w-100 fw-normal" htmlFor="library">

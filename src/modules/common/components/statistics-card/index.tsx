@@ -1,7 +1,13 @@
 import React, { ReactNode } from "react";
 import Styles from "./StatisticsCard.module.scss";
 import classNames from "classnames/bind";
-import LineChartForAdminDashboard from "../../../layout/admin/components/line-chart-admin-dash-broad";
+// import LineChartForAdminDashboard from "@/modules/layout/admin/components/line-chart-admin-dash-broad";
+import dynamic from "next/dynamic";
+
+const LineChartForAdminDashboard = dynamic(
+  () => import("@/modules/layout/admin/components/line-chart-admin-dash-broad"),
+  { ssr: false }
+);
 const cx = classNames.bind(Styles);
 
 const StatisticsCard: React.FC<{
@@ -12,6 +18,7 @@ const StatisticsCard: React.FC<{
   light_yellow_card?: boolean;
   light_red_card?: boolean;
   icon?: ReactNode;
+  categories: string[];
   series: number[];
 }> = ({
   children,
@@ -22,6 +29,7 @@ const StatisticsCard: React.FC<{
   light_red_card,
   icon,
   series,
+  categories,
 }) => {
   const classes = cx("wrapper", {
     blue_card,
@@ -54,7 +62,13 @@ const StatisticsCard: React.FC<{
         >
           {icon && <span className={cx("icon", "col-6")}>{icon}</span>}
           <div className={cx("chart", "col-6")}>
-            <LineChartForAdminDashboard color={`${color}`} series={series} />
+            {typeof window !== "undefined" && (
+              <LineChartForAdminDashboard
+                color={`${color}`}
+                series={series}
+                categories={categories}
+              />
+            )}
           </div>
         </div>
         <div className={cx("children")}>{children}</div>

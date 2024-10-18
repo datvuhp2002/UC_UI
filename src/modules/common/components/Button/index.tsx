@@ -16,6 +16,7 @@ interface ButtonProps {
   disabled?: boolean;
   active?: boolean;
   barButton?: boolean;
+  login_btn?: boolean;
   collapse?: boolean;
   directionLink?: boolean;
   research_information?: boolean;
@@ -30,6 +31,8 @@ interface ButtonProps {
   icon_only?: boolean;
   orange_btn?: boolean;
   grey_btn?: boolean;
+  success_btn?: boolean;
+  danger_btn?: boolean;
   rightIcon?: ReactNode;
   children?: ReactNode;
   onClick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>; // Click handler for both Link and button
@@ -50,7 +53,10 @@ const Button: React.FC<ButtonProps> = ({
   transparent_btn,
   collapse,
   directionLink,
+  login_btn,
   orange_btn,
+  success_btn,
+  danger_btn,
   className,
   grey_btn,
   research_information,
@@ -95,9 +101,12 @@ const Button: React.FC<ButtonProps> = ({
     icon_only,
     admin_temp,
     grey_btn,
+    success_btn,
+    danger_btn,
     transparent_btn,
     active,
     orange_btn,
+    login_btn,
     NavLink,
     toggleMenu,
     rounded,

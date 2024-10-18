@@ -1,18 +1,18 @@
-// Header.tsx
+"use client";
 import React from "react";
 import { styled } from "@mui/material/styles";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import styles from "./Header.module.scss";
 import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import Link from "next/link";
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
   handleDrawerOpen?: () => void;
@@ -35,7 +35,10 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = [
+  { title: "Tài khoản", path: "#" },
+  { title: "Đăng xuất", path: "/login" },
+];
 const Header: React.FC<{ open: boolean; handleDrawerOpen: () => void }> = ({
   open,
   handleDrawerOpen,
@@ -81,14 +84,22 @@ const Header: React.FC<{ open: boolean; handleDrawerOpen: () => void }> = ({
             Quản lý đăng ký thẻ
           </div>
         </Box>
-        <Box sx={{ display: { xs: "none", md: "flex" } }} className={`pe-3`}>
-          <Tooltip title="Open settings">
+        <Box
+          sx={{ display: { xs: "none", md: "flex", position: "relative" } }}
+          className={`pe-3 `}
+        >
+          <Tooltip title="Open settings" sx={{ position: "relative" }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <Avatar alt="Remy Sharp" src="" />
             </IconButton>
           </Tooltip>
           <Menu
-            sx={{ mt: "45px" }}
+            sx={{
+              mt: "45px",
+              "& .MuiList-root": {
+                backgroundColor: "#fff",
+              },
+            }}
             id="menu-appbar"
             anchorEl={anchorElUser}
             anchorOrigin={{
@@ -103,9 +114,15 @@ const Header: React.FC<{ open: boolean; handleDrawerOpen: () => void }> = ({
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <div className="fs-4">{setting}</div>
+            {settings.map((setting, index) => (
+              <MenuItem
+                key={index}
+                onClick={handleCloseUserMenu}
+                sx={{ bgcolor: "#fff" }}
+              >
+                <Link href={setting.path} className="fs-4">
+                  {setting.title}
+                </Link>
               </MenuItem>
             ))}
           </Menu>

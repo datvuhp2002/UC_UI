@@ -14,6 +14,8 @@ interface InputFieldProps {
   type?: string;
   text_end?: boolean;
   admin_temp?: boolean;
+  login_temp?: boolean;
+  id?: string;
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -29,6 +31,8 @@ const InputField: React.FC<InputFieldProps> = ({
   type = "text",
   text_end = false,
   admin_temp = false,
+  login_temp,
+  id,
   onInput,
 }) => {
   return (
@@ -47,6 +51,7 @@ const InputField: React.FC<InputFieldProps> = ({
         <Input
           admin_temp={admin_temp}
           type={type}
+          login_temp={login_temp}
           name={name}
           register={register}
           validation={validation}
@@ -54,6 +59,7 @@ const InputField: React.FC<InputFieldProps> = ({
           leftIcon={leftIcon}
           errors={errors}
           onInput={onInput}
+          id={id}
         />
         {errors[name] && ( // Hiển thị thông báo lỗi chỉ khi đã tương tác
           <small className="text-danger">{errors[name]?.message}</small>

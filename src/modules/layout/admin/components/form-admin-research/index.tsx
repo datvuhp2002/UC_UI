@@ -5,15 +5,18 @@ import {
   faArrowRotateLeft,
   faSliders,
 } from "@fortawesome/free-solid-svg-icons";
-
-import styles from "./FormAdminResearch.module.scss"; // Import any relevant styles
+import styles from "./FormAdminResearch.module.scss";
 import InputField from "@/modules/common/components/input-field-register-library";
 import Button from "@/modules/common/components/Button";
 import { Tooltip } from "@mui/material";
+import { handleDateInput } from "@/modules/common/tools/date-validation";
+import { useEffect, useState } from "react";
+import RegisterLibraryServices from "@/services/register-library-services";
+import Select from "@/modules/common/components/Select";
 
 interface FormAdminResearchProps {
-  register: any; // Adjust with correct type based on react-hook-form
-  errors: any; // Adjust type for error handling
+  register: any;
+  errors: any;
   handleSubmit: any;
   onSubmit: any;
   getValues: any;
@@ -21,9 +24,11 @@ interface FormAdminResearchProps {
   clearErrors: any;
 }
 interface IFormValue {
-  cccd?: string;
+  cardType?: string;
   fullName?: string;
   registrationCode?: string;
+  sd?: string;
+  ed?: string;
 }
 const FormAdminResearch: React.FC<FormAdminResearchProps> = ({
   register,
@@ -34,6 +39,13 @@ const FormAdminResearch: React.FC<FormAdminResearchProps> = ({
   setValue,
   clearErrors,
 }) => {
+  const [cardType, setCardType] = useState<any>([]);
+  useEffect(() => {
+    RegisterLibraryServices.GetCardType().then((res) => {
+      setCardType(res);
+    });
+  }, []);
+
   const resetFormValues = () => {
     const currentValues = getValues();
     Object.keys(currentValues).forEach((key) => {
@@ -43,6 +55,7 @@ const FormAdminResearch: React.FC<FormAdminResearchProps> = ({
       clearErrors(key as keyof IFormValue);
     });
   };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -50,52 +63,70 @@ const FormAdminResearch: React.FC<FormAdminResearchProps> = ({
     >
       <div className="mt-3 d-flex row w-100 justify-content-between">
         <div className="row col-sm-12 col-md-10 align-items-center m-0">
-          {/* Full Name */}
-          <div className="col-xs-12 col-md-4 mb-2">
-            <InputField
-              text_end={true}
-              admin_temp={true}
-              name="fullName"
-              register={register}
-              required={false}
-              validation={{}}
-              placeholder="Tên người đăng ký"
-              errors={errors}
-            />
+          <div className="col-12 row">
+            {/* card type */}
+            <div className="col-12 mb-2">
+              <Select
+                name="cardType"
+                register={register}
+                validation={{}}
+                errors={errors}
+              >
+                <option value="" hidden>
+                  --- Loại thẻ đăng ký ---
+                </option>
+                {cardType &&
+                  cardType.map((item: any, index: string) => (
+                    <option key={index} value={item.value}>
+                      {item.title}
+                    </option>
+                  ))}
+              </Select>
+            </div>
+            {/* status */}
+            <div className="col-12 mb-2">
+              <Select
+                name="status"
+                register={register}
+                validation={{}}
+                errors={errors}
+              >
+                <option value="" hidden>
+                  --- Trạng thái ---
+                </option>
+
+                {cardType &&
+                  cardType.map((item: any, index: string) => (
+                    <option key={index} value={item.value}>
+                      {item.title}
+                    </option>
+                  ))}
+              </Select>
+            </div>
           </div>
-          {/* Registration Code */}
-          <div className="col-xs-12 col-md-4 mb-2">
-            <InputField
-              admin_temp={true}
-              text_end={true}
-              name="registrationCode"
-              register={register}
-              required={false}
-              placeholder="Mã đăng ký"
-              errors={errors}
-            />
-          </div>
-          {/* CCCD */}
-          <div className="col-xs-12 col-md-4 mb-2">
-            <InputField
-              admin_temp={true}
-              text_end={true}
-              name="cccd"
-              register={register}
-              validation={{
-                length: {
-                  value: 12,
-                  message: "Căn cước công dân phải có 12 ký tự",
-                },
-                pattern: {
-                  value: /^[0-9]+$/,
-                  message: "Chỉ cho phép số, không có chữ cái",
-                },
-              }}
-              required={false}
-              placeholder="Số căn cước công dân"
-              errors={errors}
-            />
+          <div className="col-12 row">
+            {/* Start day */}
+            <div className="col-xs-12 col-md-6 mb-2">
+              <InputField
+                name="sd"
+                register={register}
+                validation={{}}
+                placeholder="Ngày bắt đầu"
+                errors={errors}
+                onInput={handleDateInput}
+              />
+            </div>
+            {/* End day */}
+            <div className="col-xs-12 col-md-6 mb-2">
+              <InputField
+                name="ed"
+                register={register}
+                validation={{}}
+                placeholder="Ngày kết thúc"
+                errors={errors}
+                onInput={handleDateInput}
+              />
+            </div>
           </div>
         </div>
         <div className="col-xs-12 col-md-2 d-flex align-items-center justify-content-center">
@@ -118,10 +149,11 @@ const FormAdminResearch: React.FC<FormAdminResearchProps> = ({
             />
           </div>
           <div className={styles.space}>
-            <Tooltip title="Delete" arrow placement="top" className="fs-3">
+            <Tooltip title="Add">
               <Button
                 rounded
                 icon_only
+                className="fs-3"
                 transparent_btn
                 leftIcon={<FontAwesomeIcon icon={faSliders} />}
               />

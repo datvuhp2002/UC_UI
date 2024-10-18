@@ -2,7 +2,6 @@
   background-color: #34444c;
 }
 .wrapper {
-  font-size: 1.5rem;
   position: relative;
   color: #fff !important;
   .header {
@@ -11,13 +10,13 @@
 }
 .bg_img {
   position: relative;
-  color: #4d5154;
   width: 100%;
   height: 100%;
   object-fit: cover;
   filter: blur(0.8rem);
   -webkit-backdrop-filter: blur(0.8rem);
   overflow: hidden;
+  color: #4d5154;
 }
 .bg_layer {
   content: "";
