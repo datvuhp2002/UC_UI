@@ -22,6 +22,7 @@ const RadioField: React.FC<RadioFieldProps> = ({ label, register, errors }) => (
             {...register("gender", { required: "Giới tính là bắt buộc" })}
             value="male"
             id="male"
+            checked="checked"
           />
           <label className=" fw-normal" htmlFor="male">
             Nam

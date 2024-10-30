@@ -10,33 +10,25 @@ const RegisterLibraryServices = {
     });
     return res;
   },
-  GetCardObjectType: async () => {
+  InitSearch: async () => {
     let res: any = await fetch({
-      url: `/${Service}/get-cardobjecttype`,
+      url: `/${Service}/init-select`,
       method: "get",
     });
     return res;
   },
-  GetCardType: async () => {
+  GetCardStatus: async () => {
     let res: any = await fetch({
-      url: `/${Service}/get-cardtype`,
+      url: `/${Service}/get-list-card-status`,
       method: "get",
     });
     return res;
   },
-  GetCardCatalog: async () => {
-    let res: any = await fetch({
-      url: `/${Service}/get-cardcatalog`,
-      method: "get",
-    });
-    return res;
-  },
-  UploadAvatar: async (data: File) => {
+  UploadAvatar: async (data: File, id: String) => {
     var formData = new FormData();
     formData.append("file", data);
-    console.log("FORM :::", formData);
     let res: any = await fetch({
-      url: `/${Service}/upload-avatar`,
+      url: `/${Service}/upload-avatar?id=${id}`,
       method: "post",
       data: formData,
     });

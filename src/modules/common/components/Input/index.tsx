@@ -19,6 +19,7 @@ interface InputProps {
   cropper?: boolean;
   admin_temp?: boolean;
   login_temp?: boolean;
+  admin_temp_research?: boolean;
   errors?: any; // Thêm props để nhận lỗi từ InputField
   [key: string]: any; // Cho phép các props bổ sung
 }
@@ -35,6 +36,7 @@ const Input: React.FC<InputProps> = ({
   onBlur,
   cropper,
   admin_temp,
+  admin_temp_research,
   login_temp,
   errors, // Nhận props errors
   ...passProps
@@ -54,6 +56,7 @@ const Input: React.FC<InputProps> = ({
     error: hasError,
     admin_temp,
     login_temp,
+    admin_temp_research,
     cropper,
     [className as string]: className,
   });

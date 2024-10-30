@@ -14,9 +14,9 @@ const ResearchResult = ({ researchResult }: { researchResult: any }) => {
             <div>
               <span>
                 <strong>
-                  Mã đăng ký:{" "}
-                  <span className="text-danger">
-                    {researchResult?.registrationCode}
+                  Mã đăng ký:
+                  <span className="ms-2 text-danger">
+                    {researchResult?.coderegister}
                   </span>
                 </strong>
               </span>
@@ -24,15 +24,11 @@ const ResearchResult = ({ researchResult }: { researchResult: any }) => {
             <div>
               <strong>
                 Tình trạng xử lý:{" "}
-                {researchResult?.status === "4" ? (
-                  <span className="text-danger">Đăng ký đang chờ duyệt!</span>
-                ) : (
-                  <span className="text-success">Đăng ký đã được duyệt!</span>
-                )}
+                <span className="text-primary">{researchResult?.status}</span>
               </strong>
             </div>
             <div>
-              {researchResult?.isPayment ? (
+              {researchResult?.ispayment ? (
                 <strong className="text-success">
                   Bạn đã thanh toán chi phí làm thẻ.
                 </strong>

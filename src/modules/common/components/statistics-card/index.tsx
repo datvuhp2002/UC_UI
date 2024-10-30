@@ -1,13 +1,9 @@
-import React, { ReactNode } from "react";
+"use client";
+import React, { ReactNode, Suspense, useEffect, useState } from "react";
 import Styles from "./StatisticsCard.module.scss";
 import classNames from "classnames/bind";
-// import LineChartForAdminDashboard from "@/modules/layout/admin/components/line-chart-admin-dash-broad";
-import dynamic from "next/dynamic";
+import Skeleton from "@mui/material/Skeleton";
 
-const LineChartForAdminDashboard = dynamic(
-  () => import("@/modules/layout/admin/components/line-chart-admin-dash-broad"),
-  { ssr: false }
-);
 const cx = classNames.bind(Styles);
 
 const StatisticsCard: React.FC<{
@@ -18,8 +14,6 @@ const StatisticsCard: React.FC<{
   light_yellow_card?: boolean;
   light_red_card?: boolean;
   icon?: ReactNode;
-  categories: string[];
-  series: number[];
 }> = ({
   children,
   className,
@@ -28,8 +22,6 @@ const StatisticsCard: React.FC<{
   light_yellow_card,
   light_red_card,
   icon,
-  series,
-  categories,
 }) => {
   const classes = cx("wrapper", {
     blue_card,
@@ -38,41 +30,52 @@ const StatisticsCard: React.FC<{
     light_red_card,
     [className as string]: className,
   });
-  // Xác định màu sắc dựa trên các props
   const color = blue_card
-    ? "#042174" // màu xanh
+    ? "var(--statistics-card-bg-blue-color)"
     : purple_card
-      ? "#27097a" // màu tím
+      ? "var(--statistics-card-bg-purple-color)"
       : light_yellow_card
-        ? "#7a4100" // màu vàng sáng
+        ? "var(--statistics-card-bg-light-yellow-color)"
         : light_red_card
-          ? "#7a0916" // màu đỏ sáng
-          : "042174"; // Mặc định màu đen nếu không có màu nào được chọn
+          ? "var(--statistics-card-bg-light-red-color)"
+          : "var(--statistics-card-bg-default-color)";
+
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
     <div className={classes}>
-      <span
-        className={cx(`bg_img`)}
-        style={{
-          mask: `url(${process.env.FILE_URL}/images/shape-square.svg) center center / contain no-repeat`,
-        }}
-      ></span>
-      <div className={cx(`body`)}>
-        <div
-          className={cx("header", "d-flex justify-content-between w-100 row")}
-        >
-          {icon && <span className={cx("icon", "col-6")}>{icon}</span>}
-          <div className={cx("chart", "col-6")}>
-            {typeof window !== "undefined" && (
-              <LineChartForAdminDashboard
-                color={`${color}`}
-                series={series}
-                categories={categories}
-              />
-            )}
+      {isClient ? (
+        <Suspense fallback={<Skeleton height={"19rem"} variant="rounded" />}>
+          <span
+            className={cx(`bg_img`)}
+            style={{
+              mask: `url(${process.env.FILE_URL}/svg/shape-square.svg) center center / contain no-repeat`,
+            }}
+          ></span>
+          <div className={cx(`body`)}>
+            <div
+              className={cx("header", "d-flex justify-content-between w-100 ")}
+            >
+              {icon && (
+                <span
+                  className={cx(
+                    "icon",
+                    "col-12 d-flex align-items-center justify-content-center"
+                  )}
+                >
+                  {icon}
+                </span>
+              )}
+            </div>
+            <div className={cx("children", "mt-2")}>{children}</div>
           </div>
-        </div>
-        <div className={cx("children")}>{children}</div>
-      </div>
+        </Suspense>
+      ) : (
+        <Skeleton height={"19rem"} variant="rounded" />
+      )}
     </div>
   );
 };

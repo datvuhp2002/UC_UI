@@ -1,14 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./DangKyThe.module.scss";
 import { libraryInfo } from "@/common/static_variable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FormRegisterLibrary from "@/modules/layout/register-library-card-online/components/form-register-library";
-import {
-  faCircleExclamation,
-  faDownload,
-  faEye,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import Image from "@/modules/common/components/Image";
 import RegisterResult from "@/modules/layout/register-library-card-online/components/register-result";
 

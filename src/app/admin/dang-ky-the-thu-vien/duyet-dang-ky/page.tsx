@@ -5,15 +5,18 @@ import styles from "./DuyetDangKy.module.scss";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Card from "@/modules/common/components/Card";
 import FormAdminApproveRegistration from "@/modules/layout/admin/components/form-admin-approve-registration";
-import RegisterSearch from "@/services/register-search-services";
 import TableSkeleton from "@/modules/common/components/table-skeleton";
 import { useToastContext } from "@/lib/context/toast-context";
 import formatDateTime from "@/common/format_date";
 import dynamic from "next/dynamic";
+import ReaderPublishSearchServices from "@/services/reader-publish-search-services";
+import { SetFormValues } from "@/common/ucform-heplers";
+import { getStatusElementForDataTable } from "@/modules/common/components/render-status";
 const DataTable = dynamic(
   () => import("@/modules/common/components/data-table"),
   { ssr: false }
 );
+
 const page = () => {
   const {
     register,
@@ -23,9 +26,10 @@ const page = () => {
     clearErrors,
     formState: { errors },
   } = useForm<any>({ mode: "all" });
-  const [formData, setFormData] = useState<any>();
   const [onLoading, setOnLoading] = useState<boolean>(true);
+  const [formData, setFormData] = useState<any>();
   const { HandleOpenToast } = useToastContext();
+
   const handleSuccessToast = () => {
     HandleOpenToast({
       type: "success",
@@ -38,13 +42,15 @@ const page = () => {
       content: `${message}! Vui lòng thử lại`,
     });
   };
-  const onSubmit: SubmitHandler<RegisterSearchDto> = (data) => {
+
+  const onSubmit: SubmitHandler<any> = (data) => {
     setOnLoading(true);
-    RegisterSearch.Search(data)
+    console.log(data);
+    ReaderPublishSearchServices.Search(SetFormValues(data))
       .then((res) => {
         if (res) {
           setOnLoading(false);
-          setFormData(res);
+          setFormData(res.data);
           handleSuccessToast();
         } else {
           handleErrorToast("Đã có lỗi xảy ra");
@@ -56,27 +62,33 @@ const page = () => {
       });
   };
   const selectedColumn = [
-    { title: "Mã ĐK", data: "registrationcode" },
-    { title: "Tên bạn đọc", data: "fullName" },
-    { title: "Loại Thẻ", data: "cardType" },
+    { title: "Mã ĐK", data: "coderegister" },
+    { title: "Tên bạn đọc", data: "fullname" },
+    { title: "Loại Thẻ", data: "cardtype" },
     { title: "CMND/CCCD", data: "cccd" },
     {
       title: "Ngày đăng ký",
-      data: "createdDate",
+      data: "createddate",
       render: (data: string) => {
         return formatDateTime.formatDate(data);
       },
     },
-    { title: "Trạng Thái", data: "status" },
-    { title: "Hình Thức Nhận", data: "receiveType" },
+    {
+      title: "Trạng Thái",
+      data: "status",
+      render: (data: string) => {
+        return getStatusElementForDataTable(data);
+      },
+    },
+    { title: "Hình Thức Nhận", data: "receivetype" },
   ];
   const getRegisterSearch = () => {
     setOnLoading(true);
-    RegisterSearch.Search(getValues())
+    ReaderPublishSearchServices.Search(SetFormValues({}))
       .then((res) => {
         if (res) {
           setOnLoading(false);
-          setFormData(res);
+          setFormData(res.data);
         } else {
           setOnLoading(false);
           handleErrorToast("Đã có lỗi xảy ra");
@@ -91,7 +103,7 @@ const page = () => {
     getRegisterSearch();
   }, []);
   return (
-    <Suspense>
+    <Suspense fallback={<div>Đang tải ....</div>}>
       <div className={`${styles.wrapper} mb-5`}>
         <div className="">
           <h2 className="fw-bold p-0">Duyệt đăng ký</h2>

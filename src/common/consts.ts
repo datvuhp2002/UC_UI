@@ -237,6 +237,10 @@ const DefaultCollection = [
   { code: "pdoc", value: [] },
   { code: "ddoc", value: [] },
 ];
+const menuOptionAdmin = [
+  { title: "Cài đặt", path: "/admin/setting" },
+  { title: "Đăng xuất", path: "/login" },
+];
 export {
   WebMetadata,
   DefaultFilterCollection,
@@ -253,4 +257,5 @@ export {
   ResourceDoc,
   OperatorQuery,
   SortDocBy,
+  menuOptionAdmin,
 };

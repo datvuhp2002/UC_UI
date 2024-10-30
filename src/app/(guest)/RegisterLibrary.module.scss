@@ -1,8 +1,8 @@
 .wrapper {
-  transition: all 0.5s ease;
+  font-size: calc(var(--fs-text-primary) + 0.1rem);
 }
 .primary_color {
-  color: var(--primary-color);
+  color: var(--text-color-guess-dashboard);
 }
 .welcome_title {
   font-weight: 600;
@@ -10,28 +10,9 @@
 }
 .welcome {
   font-weight: 600;
-  color: var(--grey-fade-color);
-}
-
-.wrapper_step {
-  .step {
-    font-size: 1.4rem;
-    font-weight: 900;
-    height: 100%;
-    .step_content {
-      padding: 1rem;
-      display: flex;
-      align-items: center;
-      font-size: 1.6rem;
-      font-weight: 100;
-      color: #898080;
-      min-height: 16rem;
-      border-radius: 0.8rem;
-      margin-bottom: 3rem;
-      margin-top: 0.5rem;
-      border: 0.3rem solid #a99696;
-    }
-  }
+  opacity: 0.8;
+  color: var(--text-color-welcome-guess-dashboard);
+  font-style: italic;
 }
 
 @keyframes bounce {

@@ -67,9 +67,9 @@ const page = () => {
               <label htmlFor="password" className="fw-bold">
                 Mật khẩu
               </label>
-              <Link href="#" className={styles.forgot_password}>
+              {/* <Link href="#" className={styles.forgot_password}>
                 Quên mật khẩu?
-              </Link>
+              </Link> */}
             </div>
             <InputField
               login_temp

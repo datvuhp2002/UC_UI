@@ -14,7 +14,6 @@ import RegisterLibraryServices from "@/services/register-library-services";
 import Select from "@/modules/common/components/Select";
 import DynamicFieldsRegisterLibrary from "../dynamic-fields-register-library";
 import { useToastContext } from "@/lib/context/toast-context";
-// import
 interface FormValues {
   cardType: string;
   readerType: string;
@@ -32,8 +31,8 @@ interface FormValues {
   nation: String;
   school: String;
   receiveType: String;
+  level: String;
 }
-
 const FormRegisterLibrary = ({ setRegisterData }: any) => {
   const {
     register,
@@ -48,9 +47,12 @@ const FormRegisterLibrary = ({ setRegisterData }: any) => {
   const captchaRef = useRef<any>(null);
   const [price, setPrice] = useState<string | undefined>();
   const [cardObjectType, setCardObjectType] = useState<any>([]);
+  const [cardObjectTypeChange, setCardObjectTypeChange] = useState<any>([]);
   const [job, setJob] = useState<any>([]);
   const [cardType, setCardType] = useState<any>([]);
   const { HandleOpenToast } = useToastContext();
+  const [fileName, setFileName] = useState<any>("");
+  const [educationLevel, setEducationLevel] = useState<any>("");
   const handleSuccessToast = () => {
     HandleOpenToast({ type: "success", content: "Đăng ký thành công!" });
   };
@@ -60,15 +62,10 @@ const FormRegisterLibrary = ({ setRegisterData }: any) => {
       content: `${message}! Vui lòng thử lại`,
     });
   };
-  const convertToDate = (dateString: string) => {
-    const [day, month, year] = dateString.split("/").map(Number);
-    return new Date(year, month - 1, day); // Lưu ý: tháng trong Date bắt đầu từ 0
-  };
-
   const resetFormValues = () => {
     const currentValues = getValues();
     Object.keys(currentValues).forEach((key) => {
-      if (key !== "cardType") {
+      if (key !== "cardType" && key !== "nation" && key !== "gender") {
         setValue(key as keyof FormValues, "");
       }
     });
@@ -87,6 +84,7 @@ const FormRegisterLibrary = ({ setRegisterData }: any) => {
         setValue(name, value);
       }
     }
+    cardObjTypeData();
     resetFormValues();
   };
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
@@ -108,40 +106,72 @@ const FormRegisterLibrary = ({ setRegisterData }: any) => {
       handleErrorToast("Mã CAPTCHA không đúng");
       return;
     }
-    if (data.dob) {
-      data.dob = convertToDate(data.dob); // Chuyển đổi thành kiểu Date
-    }
-    RegisterLibraryServices.UploadAvatar(data.photo)
+
+    RegisterLibraryServices.UploadAvatar(data.photo, fileName)
       .then((res) => {
-        data.photo = res.avatarUrl;
-        RegisterLibraryServices.Register(data).then((res) => {
-          if (res) {
-            console.log(res.data);
-            setRegisterData(res.data);
-            handleSuccessToast();
-          } else {
-            handleErrorToast("Có lỗi sảy ra");
-          }
-        });
+        if (res.data.avatarUrl) {
+          data.photo = res.data.avatarUrl;
+          RegisterLibraryServices.Register(data).then((res) => {
+            if (res.data) {
+              setRegisterData(res.data);
+              handleSuccessToast();
+            } else {
+              handleErrorToast("Có lỗi sảy ra");
+            }
+          });
+        } else {
+          handleErrorToast("Upload ảnh không thành công");
+        }
       })
       .catch((e) => handleErrorToast("Có lỗi sảy ra"));
   };
+  const cardObjTypeData = () => {
+    let filteredData = cardObjectType;
+    switch (watch("cardType")) {
+      case "thuvien": {
+        setCardObjectTypeChange(filteredData);
+        break;
+      }
+      case "thieunhigiamho":
+      case "thieunhi": {
+        filteredData = cardObjectType.filter(
+          (item: any) => item.title === "Thiếu nhi"
+        );
+        setCardObjectTypeChange(filteredData);
+        break;
+      }
+      case "canbohuutri": {
+        filteredData = cardObjectType.filter(
+          (item: any) => item.title === "Cán bộ"
+        );
+        setCardObjectTypeChange(filteredData);
+        break;
+      }
+      case "doanhnhan": {
+        filteredData = cardObjectType.filter(
+          (item: any) => item.title === "Cán bộ" || item.title === "Sinh viên"
+        );
+        setCardObjectTypeChange(filteredData);
+        break;
+      }
+      default: {
+        setCardObjectTypeChange(cardObjectType);
+      }
+    }
+  };
   useEffect(() => {
-    RegisterLibraryServices.GetCardObjectType()
-      .then((res) => setCardObjectType(res))
-      .catch((e) => console.log(e.message));
-    RegisterLibraryServices.GetCardType()
+    RegisterLibraryServices.InitSearch()
       .then((res) => {
-        setCardType(res);
-        setValue("cardType", res[0].value);
-        setPrice(res[0].price);
+        setCardType(res.cards);
+        setValue("cardType", res.cards[0].value);
+        setPrice(res.cards[0].price);
+        setCardObjectType(res.readers);
+        setCardObjectTypeChange(res.readers);
+        setJob(res.jobs);
+        setEducationLevel(res.levels);
       })
       .catch((e) => console.log(e.message));
-    RegisterLibraryServices.GetCardCatalog()
-      .then((res) => {
-        setJob(res);
-      })
-      .catch((e) => console.log(e.message));
+    setValue("gender", "male");
   }, []);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -188,9 +218,8 @@ const FormRegisterLibrary = ({ setRegisterData }: any) => {
             <option hidden value="">
               Chọn Loại bạn đọc
             </option>
-
-            {cardObjectType &&
-              cardObjectType.map((item: any, index: number) => (
+            {cardObjectTypeChange &&
+              cardObjectTypeChange.map((item: any, index: number) => (
                 <option key={index} value={item.value}>
                   {item.title}
                 </option>
@@ -208,6 +237,7 @@ const FormRegisterLibrary = ({ setRegisterData }: any) => {
           cardType={watch("cardType")}
           errors={errors}
           job={job}
+          educationLevel={educationLevel}
           register={register}
         />
       )}
@@ -224,6 +254,8 @@ const FormRegisterLibrary = ({ setRegisterData }: any) => {
               setValue("photo", croppedImage);
               clearErrors("photo");
             }}
+            setFileName={setFileName}
+            fileName={fileName}
             setError={setError}
             clearErrors={clearErrors}
             errors={errors}

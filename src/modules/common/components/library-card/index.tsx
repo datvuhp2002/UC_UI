@@ -4,10 +4,10 @@ import Image from "../Image";
 import formatDateTime from "@/common/format_date";
 
 const LibraryCard = ({ researchResult, custom }: any) => {
-  const { fullName, fullname, office, createdDate, createddate, photo } =
-    researchResult;
+  const { fullname, office, createddate, photo } = researchResult;
 
   const displayDate = (date: string) => formatDateTime.formatDate(date);
+
   const expiryDate = (date: string) =>
     formatDateTime.formatDatePlusOneYear(date);
 
@@ -48,15 +48,9 @@ const LibraryCard = ({ researchResult, custom }: any) => {
             </div>
 
             <div className="text-start">
-              {renderInfoRow("Họ tên", "Full name", fullName || fullname)}
+              {renderInfoRow("Họ tên", "Full name", fullname)}
               {renderInfoRow("Đơn vị", "Institution", office)}
 
-              {createdDate &&
-                renderInfoRow(
-                  "Ngày cấp",
-                  "Date of issue",
-                  displayDate(createdDate)
-                )}
               {createddate &&
                 renderInfoRow(
                   "Ngày cấp",
@@ -64,19 +58,12 @@ const LibraryCard = ({ researchResult, custom }: any) => {
                   displayDate(createddate)
                 )}
 
-              {createdDate &&
-                renderInfoRow(
-                  "Hết hạn",
-                  "Date of expiry",
-                  expiryDate(createdDate)
-                )}
               {createddate &&
                 renderInfoRow(
                   "Hết hạn",
                   "Date of expiry",
                   expiryDate(createddate)
                 )}
-
               {renderInfoRow("Mã thẻ", "Card code", "")}
             </div>
           </div>

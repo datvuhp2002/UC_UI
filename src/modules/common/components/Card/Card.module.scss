@@ -2,7 +2,6 @@
   box-shadow: var(--card-shadow);
   border-radius: 0.5rem;
   background-color: #fff;
-  overflow: scroll;
   .body {
     padding: 1rem;
     padding-top: 0;
@@ -12,6 +11,5 @@
     padding-bottom: 0;
     color: var(--admin-orange-color);
     margin: 0;
-    overflow: scroll;
   }
 }

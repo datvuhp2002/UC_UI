@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Link from "next/link";
+import { menuOptionAdmin } from "@/common/consts";
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
   handleDrawerOpen?: () => void;
@@ -35,10 +36,7 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
-const settings = [
-  { title: "Tài khoản", path: "#" },
-  { title: "Đăng xuất", path: "/login" },
-];
+
 const Header: React.FC<{ open: boolean; handleDrawerOpen: () => void }> = ({
   open,
   handleDrawerOpen,
@@ -84,12 +82,10 @@ const Header: React.FC<{ open: boolean; handleDrawerOpen: () => void }> = ({
             Quản lý đăng ký thẻ
           </div>
         </Box>
-        <Box
-          sx={{ display: { xs: "none", md: "flex", position: "relative" } }}
-          className={`pe-3 `}
-        >
-          <Tooltip title="Open settings" sx={{ position: "relative" }}>
+        <Box className={`pe-3 `}>
+          <Tooltip title="" sx={{ position: "relative" }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <span className="me-3 fs-3"> ADMIN</span>
               <Avatar alt="Remy Sharp" src="" />
             </IconButton>
           </Tooltip>
@@ -114,7 +110,7 @@ const Header: React.FC<{ open: boolean; handleDrawerOpen: () => void }> = ({
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            {settings.map((setting, index) => (
+            {menuOptionAdmin.map((setting, index) => (
               <MenuItem
                 key={index}
                 onClick={handleCloseUserMenu}

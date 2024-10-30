@@ -1,13 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./globals.css";
+import "./globals.scss";
 import type { Metadata, Viewport } from "next";
 import Providers from "@/modules/providers";
 import Script from "next/script";
 import { WebMetadata } from "@/common/consts";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "@/modules/theme";
-
 const inter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
@@ -37,8 +34,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <head>
+        <meta
+          name="format-detection"
+          content="telephone=no, date=no, email=no, address=no"
+        />
         <meta charSet="UTF-8" />
         <meta
           name="viewport"
@@ -63,9 +64,7 @@ export default function RootLayout({
       </head>
       <body>
         <Providers>
-          <main className={inter.className}>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
-          </main>
+          <main>{children}</main>
         </Providers>
 
         {/* Ensure jQuery loads first */}

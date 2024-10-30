@@ -14,6 +14,7 @@ interface InputFieldProps {
   type?: string;
   text_end?: boolean;
   admin_temp?: boolean;
+  admin_temp_research?: boolean;
   login_temp?: boolean;
   id?: string;
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -32,6 +33,7 @@ const InputField: React.FC<InputFieldProps> = ({
   text_end = false,
   admin_temp = false,
   login_temp,
+  admin_temp_research,
   id,
   onInput,
 }) => {
@@ -50,6 +52,7 @@ const InputField: React.FC<InputFieldProps> = ({
       <div className={label ? `col-sm-8 col-xs-12` : "col align-items-center"}>
         <Input
           admin_temp={admin_temp}
+          admin_temp_research={admin_temp_research}
           type={type}
           login_temp={login_temp}
           name={name}

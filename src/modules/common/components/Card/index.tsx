@@ -1,6 +1,6 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import styles from "./Card.module.scss";
-import { Divider } from "@mui/material";
 const Card: React.FC<{ children: React.ReactNode; title: any }> = ({
   children,
   title,

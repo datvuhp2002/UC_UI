@@ -1,140 +1,33 @@
 import React from "react";
 import styles from "./RegisterLibrary.module.scss";
-import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHandPointDown } from "@fortawesome/free-regular-svg-icons";
+import Step from "@/modules/layout/register-library-card-online/components/step";
+import Note from "@/modules/layout/register-library-card-online/components/note";
 const page = () => {
   return (
-    <div className={`${styles.wrapper} border p-5 shadow-sm`}>
-      <div className="row mb-3">
-        <div className="col-xs-12 col-md-6 text-center d-none d-md-block">
-          <h1 className={`${styles.welcome_title} ${styles.primary_color}`}>
+    <div className={`${styles.wrapper} mt-5`}>
+      <div className="">
+        <div className=" text-center">
+          <h1
+            className={`${styles.welcome_title} ${styles.primary_color} mb-3`}
+          >
             CHÀO MỪNG BẠN ĐỌC
           </h1>
-          <div className="row text-center">
+          <div className="row text-center mt-4">
             <div className="col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0 w-100">
-              <div className={`${styles.welcome}`}>
+              <h2 className={`${styles.welcome} mb-3`}>
                 Đến với trang đăng ký trực tuyến thẻ thư viện
-              </div>
-              <div className={`${styles.welcome}`}>
+              </h2>
+              <h2 className={`${styles.welcome} mb-3`}>
                 của Thư viện quốc gia Việt Nam
-              </div>
+              </h2>
             </div>
           </div>
         </div>
-        <div className="col-xs-12 col-md-6">
-          <div className="text-center">
-            <div style={{ fontSize: "3.5rem" }}>Đăng ký làm</div>
-            <div
-              className={`${styles.primary_color}`}
-              style={{ fontSize: "3.5rem", fontWeight: 700 }}
-            >
-              thẻ thư viện
-            </div>
-            <div style={{ fontSize: "3.5rem" }}>
-              Qua{" "}
-              <span
-                className={`${styles.primary_color}`}
-                style={{ fontWeight: 700 }}
-              >
-                4
-              </span>{" "}
-              bước
-            </div>
-          </div>
+        <div className=" d-flex align-items-center justify-content-center">
+          <Step />
         </div>
-      </div>
-      <div className="row">
-        <div
-          className={`${styles.wrapper_step} col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-3`}
-        >
-          <div className={`${styles.step} text-center p-1`}>
-            BƯỚC 1
-            <div className={`${styles.step_content}`}>
-              <div className="w-100">
-                Truy cập vào
-                <div>
-                  <FontAwesomeIcon
-                    icon={faHandPointDown}
-                    className={`${styles.icon_bounce}`}
-                  />
-                </div>
-                <div className="">
-                  <Link href={`dang-ky-the`}>
-                    <div
-                      className={`${styles.primary_color}`}
-                      style={{ fontWeight: 700 }}
-                    >
-                      ĐĂNG KÝ THẺ THƯ VIỆN
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className={`${styles.wrapper_step} col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-3`}
-        >
-          <div className={`${styles.step} text-center p-1`}>
-            BƯỚC 2
-            <div className={`${styles.step_content}`}>
-              <div className="w-100">
-                Nhập thông tin cá nhân.
-                <div>
-                  Bạn đọc nhận được{" "}
-                  <span
-                    className={`${styles.primary_color}`}
-                    style={{ fontWeight: 700 }}
-                  >
-                    Mã_đăng_ký
-                  </span>{" "}
-                  làm thẻ sau khi hoàn thành nhập.
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className={`${styles.wrapper_step} col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-3`}
-        >
-          <div className={`${styles.step} text-center p-1`}>
-            BƯỚC 3
-            <div className={`${styles.step_content}`}>
-              <div className="w-100">
-                Nộp tiền phí làm thẻ qua QR-Code với nội dung chuyển khoản ghi:
-                <div>
-                  <span
-                    className={`${styles.primary_color}`}
-                    style={{ fontWeight: 700 }}
-                  >
-                    Mã_đăng_ký + Họ và tên
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className={`${styles.wrapper_step} col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-3`}
-        >
-          <div className={`${styles.step} text-center p-1`}>
-            BƯỚC 4
-            <div className={`${styles.step_content}`}>
-              <div className="w-100">
-                <div>
-                  <span
-                    className={`${styles.primary_color}`}
-                    style={{ fontWeight: 700 }}
-                  >
-                    Nhận Thẻ thư viện
-                  </span>
-                  <div> - Nhận tại Nhà (có phí Dịch vụ chuyển phát)</div>
-                  <div>- Nhận tại Thư viện Quốc gia</div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className=" d-flex align-items-center justify-content-center">
+          <Note />
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import Header from "./header";
 import Sidebar from "./sidebar";
 import { styled } from "@mui/material/styles";
 import styles from "./AdminTemp.module.scss";
+import HeaderMobile from "./header-mobile";
 const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
@@ -44,8 +45,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         }}
         className={`${styles.wrapper}`}
       >
-        <DrawerHeader />
-        <div className={`p-3 pt-4`}> {children}</div>
+        <HeaderMobile />
+        <div className="d-none d-sm-block">
+          <DrawerHeader />
+        </div>
+        <div className={`p-3 pt-4`}>{children}</div>
       </Box>
     </Box>
   );

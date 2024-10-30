@@ -33,6 +33,7 @@ interface ButtonProps {
   grey_btn?: boolean;
   success_btn?: boolean;
   danger_btn?: boolean;
+  more?: boolean;
   rightIcon?: ReactNode;
   children?: ReactNode;
   onClick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>; // Click handler for both Link and button
@@ -66,6 +67,7 @@ const Button: React.FC<ButtonProps> = ({
   children,
   icon_only,
   edit_btn,
+  more,
   trash_btn,
   onClick,
   ...passProps
@@ -110,6 +112,7 @@ const Button: React.FC<ButtonProps> = ({
     NavLink,
     toggleMenu,
     rounded,
+    more,
     barButton,
     research_information,
     directionLink,

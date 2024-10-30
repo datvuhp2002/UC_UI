@@ -4,10 +4,10 @@ import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 
 const BarChartComponent: React.FC<{
-  series: number[];
+  series: { name: string; data: number[] }[];
   categories: string[];
-  color: string;
-}> = ({ series, categories, color }) => {
+  colors?: string[];
+}> = ({ series, categories, colors = ["#3498db", "#e74c3c"] }) => {
   const [chartOptions] = useState<ApexOptions>({
     chart: {
       type: "bar",
@@ -21,9 +21,14 @@ const BarChartComponent: React.FC<{
       },
     },
     dataLabels: {
-      enabled: true,
+      enabled: false,
+      style: {
+        fontSize: "1.4rem", // Font size for data labels
+        colors: ["#3498db", "#e74c3c"], // Color of the data labels
+      },
     },
-    colors: [color],
+
+    colors: colors,
     xaxis: {
       categories: categories,
     },
@@ -34,10 +39,10 @@ const BarChartComponent: React.FC<{
   });
 
   return (
-    <div style={{ width: "100%", height: "100%", margin: "0 auto" }}>
+    <div style={{ width: "100%", height: "100%", margin: "0" }}>
       <Chart
         options={chartOptions}
-        series={[{ name: "Data", data: series }]}
+        series={series}
         type="bar"
         height={"100%"}
       />

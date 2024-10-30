@@ -7,6 +7,9 @@ interface SelectProps {
   w50?: boolean;
   w70?: boolean;
   admin_temp?: boolean;
+  admin_temp_research?: boolean;
+  select_chart?: boolean;
+  select_transparent?: boolean;
   className?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -25,13 +28,16 @@ const Select: React.FC<SelectProps> = ({
   w50,
   w70,
   admin_temp,
+  admin_temp_research,
   className,
   leftIcon,
+  select_chart,
   rightIcon,
   onChange,
   register,
   name,
   validation,
+  select_transparent,
   children,
   errors,
   ...passProps
@@ -43,6 +49,9 @@ const Select: React.FC<SelectProps> = ({
     w50,
     w70,
     admin_temp,
+    admin_temp_research,
+    select_transparent,
+    select_chart,
     error: hasError,
     [className!]: className, // Use className with non-null assertion
   });

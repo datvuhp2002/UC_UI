@@ -5,27 +5,16 @@ import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Image from "@/modules/common/components/Image";
 import Link from "next/link";
 import Collapse from "@mui/material/Collapse";
-import HowToRegIcon from "@mui/icons-material/HowToReg";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import HomeIcon from "@mui/icons-material/Home";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import styles from "./Sidebar.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  fa6,
-  faAddressCard,
-  faCircle,
-  faCircleDot,
-  faHome,
-  faUserCheck,
-} from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
+import { directAdminRoutes } from "@/config/router";
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -89,38 +78,9 @@ const Sidebar: React.FC<{
       [index]: !prev[index],
     }));
   };
-  const sidebarItems = [
-    {
-      text: "Trang chủ",
-      icon: faHome,
-      path: "/admin",
-    },
-    {
-      text: "Đăng ký thẻ thư viện",
-      icon: faAddressCard,
-      path: "dang-ky-the-thu-vien",
-      subMenu: [
-        {
-          text: "Duyệt đăng ký",
-          icon: faCircle,
-          path: "/admin/dang-ky-the-thu-vien/duyet-dang-ky",
-        },
-        {
-          text: "Tra cứu - báo cáo",
-          icon: faCircle,
-          path: "/admin/dang-ky-the-thu-vien/tra-cuu-bao-cao",
-        },
-        {
-          text: "Quản lý góp ý",
-          icon: faCircle,
-          path: "/admin/dang-ky-the-thu-vien/quan-ly-gop-y",
-        },
-      ],
-    },
-  ];
 
   const renderSidebarItem = () => {
-    return sidebarItems.map((item, index) => {
+    return directAdminRoutes.map((item, index) => {
       const isActive = item.path
         ? pathName === item.path || pathName.startsWith(`/admin/${item.path}`)
         : false;

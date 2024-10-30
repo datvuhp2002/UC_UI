@@ -12,34 +12,21 @@ import "datatables.net-responsive-dt";
 import DataTable from "datatables.net-react";
 
 DataTable.use(DT);
-// interface TableData {
-//   registrationcode: string;
-//   cardType: string;
-//   readerType: string;
-//   registerType: string | null;
-//   fullName: string;
-//   dob: string;
-//   cccd: string;
-//   address: string;
-//   email: string;
-//   tel: string;
-//   job: string;
-//   avatar: string;
-//   status: string;
-//   cardNo: string | null;
-//   representative: string | null;
-//   createdBy: string | null;
-//   createdDate: string;
-//   deadline: string | null;
-//   note: string | null;
-//   office: string;
-//   gender: "male" | "female" | "other";
-//   expiredDate: string | null;
-//   isPayment: boolean;
-//   receiveType: string;
-//   id: string;
-// }
-function App({ data, selectedColumn, edit_direction }: any) {
+
+interface DataTable {
+  data: any;
+  selectedColumn: any;
+  edit_direction: any;
+  isComment?: boolean;
+  action?: (id: any) => any;
+}
+function App({
+  data,
+  selectedColumn,
+  edit_direction,
+  isComment = false,
+  action,
+}: DataTable) {
   const route = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedRow, setSelectedRow] = useState<string | null>(null);
@@ -55,9 +42,8 @@ function App({ data, selectedColumn, edit_direction }: any) {
   };
 
   const handleView = () => {
-    console.log(`Edit item with ID: ${selectedRow}`);
     route.push(`${edit_direction}/${selectedRow}`);
-    // handleClosePopover();
+    handleClosePopover();
   };
 
   const handleDelete = () => {
@@ -94,25 +80,40 @@ function App({ data, selectedColumn, edit_direction }: any) {
         data: null,
         orderable: false,
         render: (data: any, type: any, row: any) => {
-          return `
+          return isComment
+            ? `
+               <button class='btn btn-outline-success action-comment-button fs-4 fw-bold' data-id='${row.id}' }>
+                Duyệt
+               </button>
+            `
+            : `
             <button class='action-menu bg-transparent btn ' data-id='${row.id}'>
                 <svg fill="#333" width="3rem" height="2rem" viewBox="0 0 512.00 512.00" xmlns="http://www.w3.org/2000/svg" stroke="#637381" stroke-width="0.512" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title>ionicons-v5-f</title><circle cx="256" cy="256" r="48"></circle><circle cx="256" cy="416" r="48"></circle><circle cx="256" cy="96" r="48"></circle></g></svg>
-            
             </button>
           `;
         },
       },
     ],
     drawCallback: function () {
-      // Attach click handlers to dynamically created icons
-      document.querySelectorAll(".action-menu").forEach((element) => {
-        element.addEventListener("click", (event) => {
-          const id = (event.currentTarget as HTMLElement).getAttribute(
-            "data-id"
-          );
-          handleOpenPopover(event as any, id!);
-        });
-      });
+      !isComment
+        ? document.querySelectorAll(".action-menu").forEach((element) => {
+            element.addEventListener("click", (event) => {
+              const id = (event.currentTarget as HTMLElement).getAttribute(
+                "data-id"
+              );
+              handleOpenPopover(event as any, id!);
+            });
+          })
+        : document
+            .querySelectorAll(".action-comment-button")
+            .forEach((element) => {
+              element.addEventListener("click", (event) => {
+                const id = (event.currentTarget as HTMLElement).getAttribute(
+                  "data-id"
+                );
+                action && action(id);
+              });
+            });
     },
   };
   useEffect(() => {}, [data]);
@@ -153,7 +154,7 @@ function App({ data, selectedColumn, edit_direction }: any) {
           </div>
 
           <div>
-            <Button
+            {/* <Button
               className="w-100 "
               color="error"
               rounded
@@ -163,7 +164,7 @@ function App({ data, selectedColumn, edit_direction }: any) {
               leftIcon={<FontAwesomeIcon icon={faTrashCan} />}
             >
               Xóa
-            </Button>
+            </Button> */}
           </div>
         </Stack>
       </Popover>

@@ -14,7 +14,6 @@ import {
   faUserXmark,
   faVenusMars,
 } from "@fortawesome/free-solid-svg-icons";
-import ReaderPublicSearch from "@/services/reader-public-search";
 import styles from "./ChiTietDuyetDangKy.module.scss";
 import Image from "@/modules/common/components/Image";
 import LibraryCard from "@/modules/common/components/library-card";
@@ -22,18 +21,19 @@ import SkeletonData from "@/modules/common/components/skeleton-data";
 import formatDateTime from "@/common/format_date";
 import Link from "next/link";
 import { useToastContext } from "@/lib/context/toast-context";
+import ReaderPublishSearchServices from "@/services/reader-publish-search-services";
+import { getStatusElement } from "@/modules/common/components/render-status";
 const page = () => {
   const params = useParams<{ id: string }>();
   const router = useRouter();
-
   const [userData, setUserData] = useState<any>();
   const [status, setStatus] = useState<string>("4");
   const [isPayment, setIsPayment] = useState<boolean>();
   const { HandleOpenToast } = useToastContext();
-  const handleSuccessToast = () => {
+  const handleSuccessToast = (message: string) => {
     HandleOpenToast({
       type: "success",
-      content: "Cập nhật trạng thái thành công!",
+      content: message,
     });
   };
   const handleErrorToast = (message: string) => {
@@ -43,40 +43,59 @@ const page = () => {
     });
   };
   const handleOnUpdateStatus = async (status: string) => {
-    const updateStatus = await ReaderPublicSearch.UpdateStatusRegister({
-      id: params.id,
-      status,
-      note: "",
-    });
-    if (updateStatus && updateStatus.success) {
-      setStatus(status);
-      handleSuccessToast();
+    if (status === "3") {
+      if (confirm("Bạn có chắc chắn từ chối thẻ đăng ký này?") !== true) return;
+    }
+    const updateStatus = await ReaderPublishSearchServices.UpdateStatusRegister(
+      {
+        id: params.id,
+        status,
+        note: "",
+      }
+    );
+    if (updateStatus) {
+      if (
+        status == "2" &&
+        updateStatus.message === "Đăng ký chưa được cấp số thẻ"
+      ) {
+        handleErrorToast(updateStatus.message);
+      } else {
+        setStatus(status);
+        handleSuccessToast(updateStatus.message);
+      }
     } else {
       handleErrorToast("Cập nhật thất bại");
     }
   };
+
   const handleOnUpdatePaymentStatus = async (status: boolean) => {
-    const result = await ReaderPublicSearch.UpdatePaymentStatus({
+    const result = await ReaderPublishSearchServices.UpdatePaymentStatus({
       id: params.id,
       status: status,
     });
     if (result && result.success) {
       setIsPayment(status);
-      handleSuccessToast();
+      handleSuccessToast(result.message);
     } else {
       setIsPayment(!status);
       handleErrorToast("Cập nhật trạng thái thanh toán thất bại");
     }
   };
+
   useEffect(() => {
-    ReaderPublicSearch.GetItemById(params.id).then((res) => {
-      setStatus(res.data.status);
-      setIsPayment(res.data.ispayment);
-      setUserData(res.data);
+    ReaderPublishSearchServices.GetItemById(params.id).then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        setStatus(res.data?.status || false);
+        setIsPayment(res.data?.ispayment || false);
+        setUserData(res.data);
+      } else {
+        handleErrorToast("Đã xảy ra lỗi");
+      }
     });
   }, []);
   return (
-    <Suspense>
+    <Suspense fallback={<div>Đang tải...</div>}>
       <div className={styles.wrapper}>
         <div className="">
           <h2 className="fw-bold p-0">Duyệt đăng ký</h2>
@@ -97,64 +116,66 @@ const page = () => {
             </li>
           </ol>
         </div>
-        <Card
-          title={
-            <div className="row align-items-center justify-content-between">
-              <div className="col-sm-12 col-md-7 mt-2">
-                Đăng ký thẻ thư viện | Mã đăng ký{" "}
-                <strong className="text-danger"> {params.id}</strong>
+        {userData ? (
+          <Card
+            title={
+              <div className="row align-items-center justify-content-between">
+                <div className="col-sm-12 col-md-7 mt-2">
+                  Đăng ký thẻ thư viện | Mã đăng ký:
+                  <strong className="ms-2 text-danger">
+                    {userData.coderegister}
+                  </strong>
+                </div>
+                <div className="col-sm-12 col-md-5 row d-flex fs-5">
+                  <div className="col mt-2">
+                    <Button
+                      danger_btn
+                      rounded
+                      leftIcon={<FontAwesomeIcon icon={faUserCheck} />}
+                      className="text-nowrap w-100 justify-content-around"
+                      onClick={() => handleOnUpdateStatus("1")}
+                    >
+                      Duyệt đăng ký
+                    </Button>
+                  </div>
+                  <div className="col mt-2">
+                    <Button
+                      rounded
+                      success_btn
+                      leftIcon={<FontAwesomeIcon icon={faCheck} />}
+                      className="text-nowrap w-100 justify-content-around"
+                      onClick={() => handleOnUpdateStatus("2")}
+                    >
+                      Hoàn thành cấp thẻ
+                    </Button>
+                  </div>
+                  <div className="col mt-2">
+                    <Button
+                      rounded
+                      transparent_btn
+                      leftIcon={<FontAwesomeIcon icon={faUserXmark} />}
+                      className="text-nowrap w-100 justify-content-around"
+                      onClick={() => handleOnUpdateStatus("3")}
+                    >
+                      Từ chối
+                    </Button>
+                  </div>
+                  <div className="col mt-2">
+                    <Button
+                      rounded
+                      leftIcon={<FontAwesomeIcon icon={faLeftLong} />}
+                      className="text-nowrap w-100 justify-content-around"
+                      transparent_btn
+                      onClick={() => router.back()}
+                    >
+                      Quay lại
+                    </Button>
+                  </div>
+                </div>
               </div>
-              <div className="col-sm-12 col-md-5 row d-flex fs-5">
-                <div className="col mt-2">
-                  <Button
-                    orange_btn
-                    rounded
-                    leftIcon={<FontAwesomeIcon icon={faUserCheck} />}
-                    className="text-nowrap w-100 justify-content-around"
-                    onClick={() => handleOnUpdateStatus("1")}
-                  >
-                    Duyệt đăng ký
-                  </Button>
-                </div>
-                <div className="col mt-2">
-                  <Button
-                    rounded
-                    success_btn
-                    leftIcon={<FontAwesomeIcon icon={faCheck} />}
-                    className="text-nowrap w-100 justify-content-around"
-                    onClick={() => handleOnUpdateStatus("2")}
-                  >
-                    Hoàn thành cấp thẻ
-                  </Button>
-                </div>
-                <div className="col mt-2">
-                  <Button
-                    rounded
-                    danger_btn
-                    leftIcon={<FontAwesomeIcon icon={faUserXmark} />}
-                    className="text-nowrap w-100 justify-content-around"
-                    onClick={() => handleOnUpdateStatus("3")}
-                  >
-                    Từ chối
-                  </Button>
-                </div>
-                <div className="col mt-2">
-                  <Button
-                    rounded
-                    leftIcon={<FontAwesomeIcon icon={faLeftLong} />}
-                    className="text-nowrap w-100 justify-content-around"
-                    transparent_btn
-                    onClick={() => router.back()}
-                  >
-                    Quay lại
-                  </Button>
-                </div>
-              </div>
-            </div>
-          }
-        >
-          <div className={`${styles.body} my-2`}>
-            {userData ? (
+            }
+          >
+            <div className={`${styles.body} my-2`}>
               <div className="row">
                 {/* Info */}
                 <div className="row col-sm-12 col-md-12 col-lg-8">
@@ -166,7 +187,7 @@ const page = () => {
                       <div className={`${styles.card_img} shadow-sm`}>
                         <Image
                           alt="Ảnh thẻ"
-                          src={process.env.FILE_URL + "/" + userData.photo}
+                          src={process.env.FLIPBOOK_URL + "/" + userData.photo}
                         />
                       </div>
                     </div>
@@ -236,7 +257,7 @@ const page = () => {
                     <div className={`row d-flex align-items-center mb-2`}>
                       <div className="col text-end">Loại thẻ</div>
                       <div className="col d-flex">
-                        <div className=" fw-bold">{userData.title}</div>
+                        <div className=" fw-bold">{userData.cardtype}</div>
                       </div>
                     </div>
                     {/* reader type */}
@@ -288,16 +309,8 @@ const page = () => {
                       <div className="col text-end">Trạng thái chờ xử lý</div>
                       <div className="col d-flex">
                         <div className=" fw-bold">
-                          {/*  1 - duyệt đăng ký / 2 - hoàn thành / 3 - từ chối */}
-                          {status === "1" ? (
-                            <span className="text-primary">Duyệt đăng ký</span>
-                          ) : status === "2" ? (
-                            <span className="text-success">Hoàn thành</span>
-                          ) : status === "3" ? (
-                            <span className="text-danger">Từ chối</span>
-                          ) : (
-                            <span className="text-warning">Chờ duyệt</span>
-                          )}
+                          {/*  1 - duyệt đăng ký / 2 - hoàn thành / 3 - từ chối / 4 - Chờ duyệt */}
+                          {getStatusElement(status)}
                         </div>
                       </div>
                     </div>
@@ -331,11 +344,11 @@ const page = () => {
                   <LibraryCard researchResult={userData} custom={"w-100"} />
                 </div>
               </div>
-            ) : (
-              <SkeletonData />
-            )}
-          </div>
-        </Card>
+            </div>
+          </Card>
+        ) : (
+          <SkeletonData />
+        )}
       </div>
     </Suspense>
   );

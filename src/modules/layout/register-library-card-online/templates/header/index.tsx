@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Header.module.scss";
 import Image from "@/modules/common/components/Image";
 import Button from "@/modules/common/components/Button";
@@ -15,19 +15,26 @@ interface Route {
   icon?: React.ReactNode;
 }
 
-const Header = () => {
+const Header = ({ theme }: any) => {
   const [show, setShow] = useState(false);
+  const [logo, setLogo] = useState("");
   const target = useRef(null);
   const pathName = usePathname();
-
   const handleToggleMenu = () => {
     setShow(!show);
   };
+  useEffect(() => {
+    const logo =
+      theme === "standard"
+        ? process.env.FILE_URL + "images/logo.jpg"
+        : process.env.FILE_URL + "svg/logo.svg";
+    setLogo(logo);
+  }, [theme]);
 
   return (
     <div className={`${styles.wrapper} d-flex align-items-center`}>
       <div className="container d-flex align-items-center">
-        <Image alt="logo" src={process.env.FILE_URL + "images/logo.jpg"} logo />
+        {logo && <Image alt="logo" src={logo} logo />}
         <span className={`${styles.title} ms-2 d-none d-sm-block`}>
           MỤC LỤC LIÊN HỢP DÙNG CHUNG - UC.KMS
         </span>
@@ -64,7 +71,7 @@ const Header = () => {
                     key={route.path}
                     onClick={handleToggleMenu}
                     toggleMenu
-                    className="rounded-2"
+                    className="rounded-2 fs-3"
                   >
                     {route.name}
                   </Button>

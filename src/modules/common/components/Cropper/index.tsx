@@ -28,6 +28,8 @@ interface ImageCropperModalProps {
   setError: any;
   clearErrors: any;
   errors: any;
+  setFileName: any;
+  fileName: any; // Image file name
 }
 
 const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
@@ -35,12 +37,13 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
   setError,
   clearErrors,
   errors,
+  setFileName,
+  fileName,
 }) => {
   const [image, setImage] = useState<string>(
     `${process.env.FILE_URL}/images/huongdancatanh.png`
   );
   const [croppedImage, setCroppedImage] = useState<string | null>(null); // Cropped image
-  const [fileName, setFileName] = useState<string>(""); // Image file name
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // Modal visibility
   const cropperRef = useRef<any>(null); // Cropper reference
   const [scaleX, setScaleX] = useState<number>(1); // Flip X axis state
@@ -88,16 +91,16 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
         clearErrors("photo");
       }
 
-      if (file.size > 200 * 1024) {
-        setError("photo", {
-          type: "invalid",
-          message: "File không được lớn hơn 200KB.",
-        });
-        setIsModalOpen(false);
-        return;
-      } else {
-        clearErrors("photo");
-      }
+      // if (file.size > 200 * 1024) {
+      //   setError("photo", {
+      //     type: "invalid",
+      //     message: "File không được lớn hơn 200KB.",
+      //   });
+      //   setIsModalOpen(false);
+      //   return;
+      // } else {
+      //   clearErrors("photo");
+      // }
       setFileName(file.name);
       SetIsSelecteImag(true);
       const reader = new FileReader();
@@ -148,7 +151,7 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
       <Popover.Header as="h3">Ảnh mẫu</Popover.Header>
       <Popover.Body>
         <img
-          src={`${process.env.FILE_URL}/images/anhthe.gif`}
+          src={`${process.env.FILE_URL}/svg/anhthe.svg`}
           alt="Cropped"
           style={{ width: "100%" }}
         />
@@ -187,12 +190,12 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
               </OverlayTrigger>
             )}
             {/* Button to open modal for cropping */}
-            <Button
+            <button
               className={`${styles.select_image_button}`}
               onClick={() => setIsModalOpen(true)}
             >
               chọn
-            </Button>
+            </button>
           </div>
         </div>
         <div className="col-2 ">
@@ -213,9 +216,7 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
         centered
         size="lg"
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Cắt ảnh</Modal.Title>
-        </Modal.Header>
+        <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
           <Cropper
             src={image}

@@ -53,6 +53,20 @@
       text-decoration: none;
     }
   }
+  &.more {
+    box-shadow: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    padding: 0;
+    opacity: 0.7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    &:hover {
+      opacity: 1;
+    }
+  }
   &.login_btn {
     background: var(--header-admin-bg-color) !important;
   }
@@ -65,10 +79,11 @@
   }
   &.NavLink {
     height: 100%;
+    width: 15rem;
     color: var(--navlink-text-color);
     background-color: transparent;
     .title {
-      font-weight: normal;
+      // font-weight: normal;
     }
     &:hover {
       color: #fff;
@@ -76,6 +91,9 @@
       .title {
         font-weight: bolder;
       }
+    }
+    &.NavLink {
+      margin: 0;
     }
   }
   &.admin_temp {
@@ -89,7 +107,7 @@
     }
   }
   &.active {
-    border-bottom: 0.3rem solid #2a5d7d;
+    border-bottom: 0.3rem solid var(--navlink-active-color);
     .title {
       font-weight: bolder;
     }

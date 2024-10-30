@@ -1,4 +1,3 @@
-import { faEnvelopeOpen } from "@fortawesome/free-regular-svg-icons";
 import { publicRoute } from "./index";
 import {
   faBookAtlas,
@@ -6,6 +5,8 @@ import {
   faEnvelopeOpenText,
   faHome,
   faMagnifyingGlass,
+  faAddressCard,
+  faCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -36,4 +37,34 @@ const directPublicRoutes = [
     icon: <FontAwesomeIcon icon={faEnvelopeOpenText} />,
   },
 ];
-export { directPublicRoutes };
+const directAdminRoutes = [
+  {
+    text: "Trang chủ",
+    icon: faHome,
+    path: "/admin",
+  },
+  {
+    text: "Đăng ký thẻ thư viện",
+    icon: faAddressCard,
+    path: "dang-ky-the-thu-vien",
+    subMenu: [
+      {
+        text: "Duyệt đăng ký",
+        icon: faCircle,
+        path: "/admin/dang-ky-the-thu-vien/duyet-dang-ky",
+      },
+      {
+        text: "Tra cứu - báo cáo",
+        icon: faCircle,
+        path: "/admin/dang-ky-the-thu-vien/tra-cuu-bao-cao",
+      },
+      {
+        text: "Quản lý góp ý",
+        icon: faCircle,
+        path: "/admin/dang-ky-the-thu-vien/quan-ly-gop-y",
+      },
+    ],
+  },
+];
+
+export { directPublicRoutes, directAdminRoutes };

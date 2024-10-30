@@ -6,19 +6,20 @@ import SimpleCaptcha from "@/modules/common/components/Captcha";
 import Button from "@/modules/common/components/Button";
 import DynamicFieldsResearchLibraryCard from "../dynamic-fields-research-library-card";
 import { useToastContext } from "@/lib/context/toast-context";
-import ReaderPublicSearch from "@/services/reader-public-search";
+import ReaderPublicSearchServices from "@/services/reader-publish-search-services";
 import { useSearchParams } from "next/navigation";
+import { SetFormValues } from "@/common/ucform-heplers";
 interface FormValues {
-  fullName: string;
+  fullname: string;
   dob: String;
   job: String;
-  registrationCode: String;
+  coderegister: String;
 }
 
 const FormResearchLibraryCard = ({
-  setRearchResult,
+  setResearchResult,
 }: {
-  setRearchResult: any;
+  setResearchResult: any;
 }) => {
   const [isChosenResearchInfo, setChosenResearchInfo] = useState(true);
   const { HandleOpenToast } = useToastContext();
@@ -51,12 +52,10 @@ const FormResearchLibraryCard = ({
     });
   };
   const getReaderPublicSearchResult = (data: FormValues) => {
-    console.log("data:::", data);
-    ReaderPublicSearch.Search(data)
+    ReaderPublicSearchServices.Search(SetFormValues(data))
       .then((res) => {
-        console.log(res[0]);
-        setRearchResult(res[0]);
-        if (res[0]) {
+        setResearchResult(res.data);
+        if (res.data.length > 0) {
           handleSuccessToast();
         } else {
           handleErrorToast("Không có kết quả");
@@ -78,11 +77,11 @@ const FormResearchLibraryCard = ({
   useEffect(() => {
     const params = searchParams.get("mã_đăng_ký");
     if (params) {
-      setValue("registrationCode", params);
+      setValue("coderegister", params);
       setChosenResearchInfo(false);
       getReaderPublicSearchResult({
-        registrationCode: params,
-        fullName: "",
+        coderegister: params,
+        fullname: "",
         dob: "",
         job: "",
       });

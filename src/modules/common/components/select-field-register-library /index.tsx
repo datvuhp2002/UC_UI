@@ -10,6 +10,7 @@ interface SelectFieldProps {
   leftIcon?: React.ReactNode; // Icon bên trái nếu cần
   data: { value: string; title: string }[]; // Dữ liệu cho các tùy chọn
   errors: any; // Điều chỉnh kiểu dữ liệu cho errors nếu có
+  default_value?: any;
 }
 
 const SelectField: React.FC<SelectFieldProps> = ({
@@ -20,6 +21,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
   leftIcon,
   data,
   errors,
+  default_value,
 }) => {
   var selected = "";
   switch (name) {
@@ -46,9 +48,15 @@ const SelectField: React.FC<SelectFieldProps> = ({
           leftIcon={leftIcon}
           errors={errors}
         >
-          <option hidden value="">
-            Chọn {selected}
-          </option>
+          {default_value ? (
+            <option hidden value={default_value.value}>
+              {default_value.title}
+            </option>
+          ) : (
+            <option hidden value="">
+              Chọn {selected}
+            </option>
+          )}
           {data.map((item, index) => (
             <option key={index} value={item.value}>
               {item.title}

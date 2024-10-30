@@ -7,9 +7,15 @@
   min-width: 5rem;
   font-size: 1.5rem;
   border-radius: 0;
+  border: none;
   border-top-right-radius: 0.3rem;
   border-bottom-right-radius: 0.3rem;
   background-color: var(--primary-color);
+  color: #fff;
+  &:hover {
+    background-color: var(--primary-color);
+    opacity: 0.8;
+  }
 }
 .see_image_button {
   border-radius: 0;

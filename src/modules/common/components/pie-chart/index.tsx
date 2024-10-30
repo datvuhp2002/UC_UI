@@ -1,19 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
+import { IPieChartByMonthData } from "@/common/models";
 
 const PieChartComponent: React.FC<{
-  series: number[];
-  labels: string[];
+  data: IPieChartByMonthData;
   colors?: string[];
-}> = ({ series, labels }) => {
-  const [chartOptions] = useState<ApexOptions>({
+}> = ({ data }) => {
+  const [chartOptions, setChartOptions] = useState<ApexOptions>({
     chart: {
       type: "pie",
       height: "100%",
     },
-    labels: labels,
+    labels: data.labels,
     tooltip: {
       theme: "light",
       custom: function ({ series, seriesIndex, w }) {
@@ -35,10 +35,20 @@ const PieChartComponent: React.FC<{
       },
     },
   });
-
+  useEffect(() => {
+    setChartOptions((prevOptions) => ({
+      ...prevOptions,
+      labels: data.labels,
+    }));
+  }, [data.labels]);
   return (
     <div style={{ width: "100%", height: "100%", margin: "0 auto" }}>
-      <Chart options={chartOptions} series={series} type="pie" height="100%" />
+      <Chart
+        options={chartOptions}
+        series={data.series}
+        type="pie"
+        height="100%"
+      />
     </div>
   );
 };

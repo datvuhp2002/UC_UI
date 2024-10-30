@@ -2,7 +2,7 @@
   box-shadow: var(--card-shadow);
   background-color: #fff;
   border-radius: 1rem;
-  overflow: scroll;
+  overflow: auto;
   position: relative;
   height: 19rem;
   .bg_img {
@@ -41,59 +41,46 @@
     align-content: end;
   }
   .icon {
-    font-size: 4rem;
+    font-size: 6rem;
   }
   &.blue_card {
+    background: var(--statistics-card-body-bg-linear-blue-color);
     .bg_img {
-      color: #1877f2;
+      color: var(--statistics-card-img-bg-blue);
     }
     .body {
-      color: #042174;
-      background-color: rgba(210, 233, 254, 0.5);
-      background: linear-gradient(
-        to right,
-        rgba(198, 227, 253, 0.5),
-        rgba(198, 227, 253, 0.9)
-      );
+      color: var(--statistics-card-body-blue-color);
+      background: var(--statistics-card-body-bg-linear-blue-color);
     }
   }
   &.purple_card {
+    background: var(--statistics-card-body-bg-linear-purple-color);
     .bg_img {
-      color: #8e33ff;
+      color: var(--statistics-card-img-bg-purple);
     }
     .body {
-      color: #27097a;
-      background: linear-gradient(
-        to right,
-        rgba(233, 207, 255, 0.5),
-        rgba(233, 207, 255, 0.9)
-      );
+      color: var(--statistics-card-body-purple-color);
+      background: var(--statistics-card-body-bg-linear-purple-color);
     }
   }
   &.light_yellow_card {
+    background: var(--statistics-card-body-bg-linear-light-yellow-color);
     .bg_img {
-      color: #ffab00;
+      color: var(--statistics-card-img-bg-light-yellow);
     }
     .body {
-      color: #7a4100;
-      background: linear-gradient(
-        to right,
-        rgba(254, 239, 198, 0.5),
-        rgba(254, 239, 198, 0.9)
-      );
+      color: var(--statistics-card-body-light-yellow-color);
+      background: var(--statistics-card-body-bg-linear-light-yellow-color);
     }
   }
   &.light_red_card {
+    background: var(--statistics-card-body-bg-linear-light-red-color);
     .bg_img {
-      color: #ff5630;
+      color: var(--statistics-card-img-bg-light-red);
     }
     .body {
-      color: #7a0916;
-      background: linear-gradient(
-        to right,
-        rgb(255, 223, 206, 0.5),
-        rgb(255, 223, 206, 0.9)
-      );
+      color: var(--statistics-card-body-light-red-color);
+      background: var(--statistics-card-body-bg-linear-light-red-color);
     }
   }
 }

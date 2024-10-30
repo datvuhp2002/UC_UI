@@ -1,7 +1,7 @@
 .wrapper {
   display: flex;
   align-items: center;
-  border: 0.3px solid var(--primary-color);
+  border: 0.03rem solid var(--component-border-color);
   border-radius: 0.3rem;
   height: 4rem;
   width: 100%;
@@ -9,7 +9,7 @@
   transition: border-color 0.2s ease-in-out;
   overflow: hidden;
   &:focus-within {
-    border: 0.1rem solid var(--primary-color);
+    border: 0.1rem solid var(--component-border-color);
   }
   input {
     padding: 0 0.8rem;
@@ -56,6 +56,7 @@
       border: 0.1rem solid #aaa;
     }
   }
+
   &.login_temp {
     height: 5rem;
   }
@@ -80,6 +81,9 @@
       }
     }
   }
+  &.admin_temp_research {
+    height: 3.5rem;
+  }
 }
 
 .w50 {
@@ -101,9 +105,10 @@
   align-items: center;
   height: 100%;
   text-align: center;
-  background-color: var(--primary-color);
+  background-color: var(--icon-space-component-bg-color);
+  border-right: 0.3px solid var(--component-border-color);
   svg {
     min-width: 2.5rem;
-    color: #fff;
+    color: var(--icon-space-component-color);
   }
 }
